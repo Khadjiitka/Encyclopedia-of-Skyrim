@@ -1,240 +1,456 @@
+
+
+<!--  
+  <?php
+require_once "db.php";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["register"])) {
+
+    $email = $_POST["email"];
+    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $character_name = $_POST["character_name"];
+    $gender = $_POST["gender"];
+    $race = $_POST["race"];
+
+    $stmt = $conn->prepare("INSERT INTO users (email,password,character_name,gender,race)
+                            VALUES (?,?,?,?,?)");
+    $stmt->bind_param("sssss",$email,$password,$character_name,$gender,$race);
+    $stmt->execute();
+}
+
+?>
+-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skyrim Registration</title>
-    <link rel="stylesheet" href="generator.css">
+    <title>Skyrim Character Creation</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English+SC&display=swap"
+        rel="stylesheet">
+
     <style>
         * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Georgia', serif;
-}
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    height: 100vh;
-    background: url("pic/bg.jpg") no-repeat center center/cover;
-    color: #f5f5f5;
-}
+        body {
+            background: url("/pic/BgGener.jpg") no-repeat center center/cover;
+            font-family: 'Cinzel', serif;
+            color: #e6e6e6;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-.overlay {
-    background: rgba(0, 0, 0, 0.75);
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    padding-left: 8%;
-}
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: -1;
+        }
 
-.home-link {
-    position: absolute;
-    top: 20px;
-    right: 40px;
-    text-decoration: none;
-    color: #d4af37;
-    font-size: 18px;
-    font-weight: bold;
-    transition: 0.3s;
-}
+        .container {
+            display: flex;
+            height: 100vh;
+        }
 
-.home-link:hover {
-    color: #ffffff;
-}
+        /* LEFT PANEL */
+        .left-panel {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-right: 1px solid #777;
+        }
 
-.form-container {
-    width: 450px;
-    max-height: 85vh;
-    overflow-y: auto;
-    padding: 30px;
-    background: rgba(20, 20, 20, 0.9);
-    border-radius: 12px;
-    box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
-}
+        .left-panel h1 {
+            font-family: "IM Fell English SC", serif;
+            font-size: 38px;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+        }
 
-.form-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #d4af37;
-}
+        .left-panel img {
+            width: 300px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
 
-label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 5px;
-    font-size: 14px;
-}
+        .left-panel button,
+        .nav-btn {
+            width: 220px;
+            padding: 12px;
+            margin: 10px 0;
+            background: linear-gradient(to right, #aaa, #ddd);
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: black;
+            transition: .3s;
+        }
 
-input, select, textarea {
-    width: 100%;
-    padding: 8px;
-    border-radius: 6px;
-    border: none;
-    background: #2a2a2a;
-    color: white;
-}
+        .left-panel button:hover,
+        .nav-btn:hover {
+            transform: scale(1.05);
+        }
 
-select[multiple] {
-    height: 80px;
-}
+        /* RIGHT PANEL */
+        .right-panel {
+            width: 50%;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-button {
-    margin-top: 20px;
-    width: 100%;
-    padding: 10px;
-    background: #d4af37;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        .form-container {
+            width: 420px;
+            position: relative;
+        }
 
-button:hover {
-    background: #b8962e;
-}
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: "IM Fell English SC", serif;
+        }
 
-::-webkit-scrollbar {
-    width: 6px;
-}
+        label {
+            display: block;
+            margin-top: 15px;
+            font-size: 14px;
+        }
 
-::-webkit-scrollbar-thumb {
-    background: #d4af37;
-    border-radius: 5px;
-}
+        .required {
+            color: #bbb;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            background: rgba(50, 50, 50, 0.8);
+            border: 1px solid #888;
+            border-radius: 6px;
+            color: white;
+            font-family: 'Cinzel', serif;
+        }
+
+        input:focus:invalid {
+            border-color: #ccc;
+        }
+
+        /* submit */
+        .submit-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, #aaa, #ddd);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* animation */
+        .form-box {
+            transition: .4s;
+        }
+
+        .hidden-form {
+            opacity: 0;
+            transform: translateX(40px);
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+
+        /* sub options */
+        .hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .4s ease;
+        }
+
+        .visible {
+            max-height: 500px;
+        }
+
+        .sub-options {
+            margin-left: 15px;
+            margin-top: 8px;
+        }
     </style>
 </head>
 
 <body>
 
-    <a href="index.html" class="home-link">Return to Skyrim</a>
+    <div class="container">
 
-    <div class="overlay">
-        <div class="form-container">
-            <h1>Join the World of Skyrim</h1>
+        <!-- LEFT -->
+        <div class="left-panel">
+            <h1 id="mainTitle">Create Your Character</h1>
+            <img src="/pic/Pers.gif" alt="Pers">
 
-            <form>
-
-                <label>Email *</label>
-                <input type="email" required>
-
-                <label>Phone Number *</label>
-                <input type="tel" required>
-
-                <label>Password *</label>
-                <input type="password" required>
-
-                <label>Character Name *</label>
-                <input type="text" required>
-
-                <label>Gender *</label>
-                <select required>
-                    <option value="">Select Gender</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Non-binary</option>
-                </select>
-
-                <label>Race *</label>
-                <select required>
-                    <option value="">Select Race</option>
-                    <option>Nord</option>
-                    <option>Breton</option>
-                    <option>Imperial</option>
-                    <option>Redguard</option>
-                    <option>High Elf</option>
-                    <option>Dark Elf</option>
-                    <option>Wood Elf</option>
-                    <option>Orc</option>
-                    <option>Khajiit</option>
-                    <option>Argonian</option>
-                </select>
-
-                <label>Guild (multiple allowed) *</label>
-                <select multiple required>
-                    <option>Companions</option>
-                    <option>College of Winterhold</option>
-                    <option>Thieves Guild</option>
-                    <option>Dark Brotherhood</option>
-                    <option>Dawnguard</option>
-                    <option>Volkihar Clan</option>
-                </select>
-
-                <label>Weapon Class (multiple allowed) *</label>
-                <select multiple required>
-                    <option>One-Handed</option>
-                    <option>Two-Handed</option>
-                    <option>Archery</option>
-                    <option>Destruction Magic</option>
-                    <option>Conjuration Magic</option>
-                    <option>Restoration Magic</option>
-                    <option>Illusion Magic</option>
-                </select>
-
-                <label>Armor Type *</label>
-                <select id="armorType" required onchange="updateArmorOptions()">
-                    <option value="">Select Armor Type</option>
-                    <option value="light">Light Armor</option>
-                    <option value="heavy">Heavy Armor</option>
-                </select>
-
-                <label>Armor Material *</label>
-                <select id="armorMaterial" required>
-                    <option value="">Select Material</option>
-                </select>
-
-                <label>Standing Stone *</label>
-                <select required>
-                    <option value="">Choose Your Standing Stone</option>
-                    <option>The Warrior</option>
-                    <option>The Mage</option>
-                    <option>The Thief</option>
-                    <option>The Lover</option>
-                    <option>The Shadow</option>
-                </select>
-
-                <label>Preferred Playstyle *</label>
-                <select required>
-                    <option value="">Select Playstyle</option>
-                    <option>Warrior</option>
-                    <option>Mage</option>
-                    <option>Assassin</option>
-                    <option>Hybrid</option>
-                </select>
-
-                <label>Short Character Backstory (optional)</label>
-                <textarea rows="4"></textarea>
-
-                <button type="submit">Create Character</button>
-
-            </form>
+            <button type="button" id="toggleBtn" onclick="toggleForms()">Login</button>
+            <a href="/index.html" class="nav-btn">Main Page</a>
         </div>
+
+        <!-- RIGHT -->
+        <div class="right-panel">
+            <div class="form-container">
+
+                <!-- REGISTER -->
+                <form method="POST" id="registerForm" class="form-box">
+
+                    <h2>Character Creation</h2>
+
+                    <label>Email <span class="required">*</span></label>
+                    <input type="email" name="email" required placeholder="Enter email">
+
+                    <label>Password <span class="required">*</span></label>
+                    <input type="password" name="password" required placeholder="Enter password">
+
+                    <label>Character Name <span class="required">*</span></label>
+                    <input type="text" name="character_name" required placeholder="Hero name">
+
+                    <label>Gender <span class="required">*</span></label>
+                    <select name="gender" required>
+                        <option value="">Select</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+
+                    <label>Race <span class="required">*</span></label>
+                    <select name="race" required>
+                        <option value="">Select</option>
+                        <option>Nord</option>
+                        <option>Breton</option>
+                        <option>Imperial</option>
+                        <option>Redguard</option>
+                        <option>Orsimer</option>
+                        <option>Bosmer</option>
+                        <option>Altmer</option>
+                        <option>Dunmer</option>
+                        <option>Khajiit</option>
+                        <option>Argonian</option>
+                    </select>
+
+                    <label>Guilds</label>
+                    
+                    <div class="guild-group">
+                    
+                        <label class="guild-option">
+                            <input type="checkbox" name="guilds[]" value="Companions">
+                            <span>Companions</span>
+                        </label>
+                    
+                        <label class="guild-option">
+                            <input type="checkbox" name="guilds[]" value="Thieves Guild">
+                            <span>Thieves Guild</span>
+                        </label>
+                    
+                        <label class="guild-option">
+                            <input type="checkbox" name="guilds[]" value="Dark Brotherhood">
+                            <span>Dark Brotherhood</span>
+                        </label>
+                    
+                        <label class="guild-option">
+                            <input type="checkbox" name="guilds[]" value="College of Winterhold">
+                            <span>College of Winterhold</span>
+                        </label>
+                    
+                        <label class="guild-option">
+                            <input type="checkbox" name="guilds[]" value="Bards College">
+                            <span>Bards College</span>
+                        </label>
+                    
+                        <label class="guild-option">
+                            <input type="checkbox" name="guilds[]" value="Blades">
+                            <span>Blades</span>
+                        </label>
+                    
+                        <label class="guild-option">
+                            <input type="checkbox" name="guilds[]" value="Nightingales">
+                            <span>Nightingales</span>
+                        </label>
+                    
+                        <label class="guild-option">
+                            <input type="checkbox" name="guilds[]" value="Dawnguard">
+                            <span>Dawnguard</span>
+                        </label>
+                    
+                        <label class="guild-option">
+                            <input type="checkbox" name="guilds[]" value="Volkihar Clan">
+                            <span>The Volkihar Vampire Clan</span>
+                        </label>
+                    
+                        <label class="guild-option">
+                            <input type="checkbox" name="guilds[]" value="Imperial Legion">
+                            <span>Imperial Legion</span>
+                        </label>
+                    
+                        <label class="guild-option">
+                            <input type="checkbox" name="guilds[]" value="Stormcloaks">
+                            <span>Stormcloaks</span>
+                        </label>
+                    
+                    </div>
+
+                    <label>Weapon Class</label>
+                    <select id="weaponClass" onchange="showWeaponOptions()">
+                        <option value="">Select</option>
+                        <option value="one">One-Handed</option>
+                        <option value="two">Two-Handed</option>
+                        <option value="archery">Archery</option>
+                        <option value="magic">Magic</option>
+                    </select>
+
+                    <div id="oneOptions" class="hidden sub-options">
+                        <select>
+                            <option>Mace</option>
+                            <option>Sword</option>
+                            <option>Axe</option>
+                        </select>
+                        <select>
+                            <option>Ebony</option>
+                            <option>Glass</option>
+                            <option>Steel</option>
+                        </select>
+                    </div>
+
+                    <div id="twoOptions" class="hidden sub-options">
+                        <select>
+                            <option>Greatsword</option>
+                            <option>Battleaxe</option>
+                            <option>Warhammer</option>
+                        </select>
+                    </div>
+
+                    <div id="archeryOptions" class="hidden sub-options">
+                        <select>
+                            <option>Steel</option>
+                            <option>Glass</option>
+                            <option>Daedric</option>
+                        </select>
+                    </div>
+
+                    <div id="magicOptions" class="hidden sub-options">
+                        <select>
+                            <option>Destruction</option>
+                            <option>Alteration</option>
+                            <option>Conjuration</option>
+                        </select>
+                        <div class="sub-options">
+                            <select>
+                                <option>Fire</option>
+                                <option>Frost</option>
+                                <option>Shock</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label>Standing Stone *</label>
+                    <select name="standing_stone" required>
+                        <option>The Apprentice Stone</option>
+                        <option>The Atronach Stone</option>
+                        <option>The Lady Stone</option>
+                        <option>The Lord Stone</option>
+                        <option>The Lover Stone</option>
+                        <option>The Mage Stone</option>
+                        <option>The Ritual Stone</option>
+                        <option>The Serpent Stone</option>
+                        <option>The Steed Stone</option>
+                        <option>The Thief Stone</option>
+                        <option>The Tower Stone</option>
+                        <option>The Warrior Stone</option>
+                    </select>
+
+                    <label>Backstory (optional)</label>
+                    <textarea name="backstory"></textarea>
+
+                    <button type="submit" name="register" class="submit-btn">
+                        Forge Destiny
+                    </button>
+
+                </form>
+
+                <!-- LOGIN -->
+                <form method="POST" action="login.php" id="loginForm" class="form-box hidden-form">
+
+                    <h2>Enter Skyrim</h2>
+
+                    <label>Email <span class="required">*</span></label>
+                    <input type="email" name="email" required>
+
+                    <label>Password <span class="required">*</span></label>
+                    <input type="password" name="password" required>
+
+                    <button type="submit" class="submit-btn">
+                        Enter
+                    </button>
+
+                </form>
+
+            </div>
+        </div>
+
     </div>
 
     <script>
-        function updateArmorOptions() {
-            const armorType = document.getElementById("armorType").value;
-            const armorMaterial = document.getElementById("armorMaterial");
+        let isLogin = false;
 
-            armorMaterial.innerHTML = '<option value="">Select Material</option>';
+        function toggleForms() {
+            const reg = document.getElementById("registerForm");
+            const log = document.getElementById("loginForm");
+            const btn = document.getElementById("toggleBtn");
+            const title = document.getElementById("mainTitle");
 
-            if (armorType === "light") {
-                armorMaterial.innerHTML += `
-            <option>Leather</option>
-            <option>Elven</option>
-            <option>Glass</option>
-            <option>Dragonscale</option>
-        `;
-            } else if (armorType === "heavy") {
-                armorMaterial.innerHTML += `
-            <option>Iron</option>
-            <option>Steel</option>
-            <option>Dwarven</option>
-            <option>Ebony</option>
-            <option>Daedric</option>
-        `;
+            if (!isLogin) {
+                reg.classList.add("hidden-form");
+                log.classList.remove("hidden-form");
+                btn.textContent = "Create Character";
+                title.textContent = "Enter Skyrim";
+                isLogin = true;
+            } else {
+                log.classList.add("hidden-form");
+                reg.classList.remove("hidden-form");
+                btn.textContent = "Login";
+                title.textContent = "Create Your Character";
+                isLogin = false;
+            }
+        }
+
+        function showWeaponOptions() {
+            let value = document.getElementById("weaponClass").value;
+
+            document.querySelectorAll(".sub-options").forEach(el => {
+                el.classList.remove("visible");
+                el.classList.add("hidden");
+            });
+
+            if (value === "one") {
+                document.getElementById("oneOptions").classList.add("visible");
+            }
+            if (value === "two") {
+                document.getElementById("twoOptions").classList.add("visible");
+            }
+            if (value === "archery") {
+                document.getElementById("archeryOptions").classList.add("visible");
+            }
+            if (value === "magic") {
+                document.getElementById("magicOptions").classList.add("visible");
             }
         }
     </script>

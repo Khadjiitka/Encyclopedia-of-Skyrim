@@ -106,13 +106,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["register"])) {
         }
 
         /* RIGHT PANEL */
-        .right-panel {
-            width: 50%;
-            overflow-y: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+            .right-panel {
+                width: 50%;
+                overflow-y: auto;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start; 
+                padding: 60px 0; 
+}
 
         .form-container {
             width: 420px;
@@ -191,6 +192,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["register"])) {
             margin-left: 15px;
             margin-top: 8px;
         }
+        .left-panel button,
+        .nav-btn,
+        .submit-btn {
+          font-family: "IM Fell English SC", serif;
+           font-size: 16px;
+          letter-spacing: 1px;
+}
     </style>
 </head>
 
@@ -249,64 +257,72 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["register"])) {
 
                     <label>Guilds</label>
                     
+                    <label>Guilds (optional)</label>
+                    
                     <div class="guild-group">
                     
-                        <label class="guild-option">
-                            <input type="checkbox" name="guilds[]" value="Companions">
-                            <span>Companions</span>
-                        </label>
+                        <select name="guilds[]" class="guild-select">
+                            <option value="">None</option>
+                            <option>Companions</option>
+                            <option>Thieves Guild</option>
+                            <option>Dark Brotherhood</option>
+                            <option>College of Winterhold</option>
+                            <option>Bards College</option>
+                            <option>Blades</option>
+                            <option>Nightingales</option>
+                            <option>Dawnguard</option>
+                            <option>Volkihar Clan</option>
+                            <option>Imperial Legion</option>
+                            <option>Stormcloaks</option>
+                        </select>
                     
-                        <label class="guild-option">
-                            <input type="checkbox" name="guilds[]" value="Thieves Guild">
-                            <span>Thieves Guild</span>
-                        </label>
+                        <select name="guilds[]" class="guild-select">
+                            <option value="">None</option>
+                            <option>Companions</option>
+                            <option>Thieves Guild</option>
+                            <option>Dark Brotherhood</option>
+                            <option>College of Winterhold</option>
+                            <option>Bards College</option>
+                            <option>Blades</option>
+                            <option>Nightingales</option>
+                            <option>Dawnguard</option>
+                            <option>Volkihar Clan</option>
+                            <option>Imperial Legion</option>
+                            <option>Stormcloaks</option>
+                        </select>
                     
-                        <label class="guild-option">
-                            <input type="checkbox" name="guilds[]" value="Dark Brotherhood">
-                            <span>Dark Brotherhood</span>
-                        </label>
+                        <select name="guilds[]" class="guild-select">
+                            <option value="">None</option>
+                            <option>Companions</option>
+                            <option>Thieves Guild</option>
+                            <option>Dark Brotherhood</option>
+                            <option>College of Winterhold</option>
+                            <option>Bards College</option>
+                            <option>Blades</option>
+                            <option>Nightingales</option>
+                            <option>Dawnguard</option>
+                            <option>Volkihar Clan</option>
+                            <option>Imperial Legion</option>
+                            <option>Stormcloaks</option>
+                        </select>
                     
-                        <label class="guild-option">
-                            <input type="checkbox" name="guilds[]" value="College of Winterhold">
-                            <span>College of Winterhold</span>
-                        </label>
-                    
-                        <label class="guild-option">
-                            <input type="checkbox" name="guilds[]" value="Bards College">
-                            <span>Bards College</span>
-                        </label>
-                    
-                        <label class="guild-option">
-                            <input type="checkbox" name="guilds[]" value="Blades">
-                            <span>Blades</span>
-                        </label>
-                    
-                        <label class="guild-option">
-                            <input type="checkbox" name="guilds[]" value="Nightingales">
-                            <span>Nightingales</span>
-                        </label>
-                    
-                        <label class="guild-option">
-                            <input type="checkbox" name="guilds[]" value="Dawnguard">
-                            <span>Dawnguard</span>
-                        </label>
-                    
-                        <label class="guild-option">
-                            <input type="checkbox" name="guilds[]" value="Volkihar Clan">
-                            <span>The Volkihar Vampire Clan</span>
-                        </label>
-                    
-                        <label class="guild-option">
-                            <input type="checkbox" name="guilds[]" value="Imperial Legion">
-                            <span>Imperial Legion</span>
-                        </label>
-                    
-                        <label class="guild-option">
-                            <input type="checkbox" name="guilds[]" value="Stormcloaks">
-                            <span>Stormcloaks</span>
-                        </label>
+                        <select name="guilds[]" class="guild-select">
+                            <option value="">None</option>
+                            <option>Companions</option>
+                            <option>Thieves Guild</option>
+                            <option>Dark Brotherhood</option>
+                            <option>College of Winterhold</option>
+                            <option>Bards College</option>
+                            <option>Blades</option>
+                            <option>Nightingales</option>
+                            <option>Dawnguard</option>
+                            <option>Volkihar Clan</option>
+                            <option>Imperial Legion</option>
+                            <option>Stormcloaks</option>
+                        </select>
                     
                     </div>
+           
 
                     <label>Weapon Class</label>
                     <select id="weaponClass" onchange="showWeaponOptions()">
@@ -408,7 +424,47 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["register"])) {
 
     </div>
 
+
+    <script> //  отключение уже выбранных гильдий в других селектах
+        document.querySelectorAll(".guild-select").forEach(select => {
+                select.addEventListener("change", updateGuildOptions);
+            });
+
+            function updateGuildOptions() {
+
+                const selects = document.querySelectorAll(".guild-select");
+                let selectedValues = [];
+
+                // собираем выбранные значения
+                selects.forEach(sel => {
+                    if (sel.value !== "") {
+                        selectedValues.push(sel.value);
+                    }
+                });
+
+                // обновляем каждый select
+                selects.forEach(sel => {
+                    let currentValue = sel.value;
+
+                    Array.from(sel.options).forEach(option => {
+
+                        if (option.value === "") return;
+
+                        if (selectedValues.includes(option.value) && option.value !== currentValue) {
+                            option.disabled = true;
+                        } else {
+                            option.disabled = false;
+                        }
+
+                    });
+
+                });
+
+            }
+    </script>
+
     <script>
+        
         let isLogin = false;
 
         function toggleForms() {

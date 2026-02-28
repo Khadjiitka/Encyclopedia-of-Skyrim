@@ -1,26 +1,5 @@
 
 
-<!--  
-  <?php
-require_once "db.php";
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["register"])) {
-
-    $email = $_POST["email"];
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-    $character_name = $_POST["character_name"];
-    $gender = $_POST["gender"];
-    $race = $_POST["race"];
-
-    $stmt = $conn->prepare("INSERT INTO users (email,password,character_name,gender,race)
-                            VALUES (?,?,?,?,?)");
-    $stmt->bind_param("sssss",$email,$password,$character_name,$gender,$race);
-    $stmt->execute();
-}
-
-?>
--->
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -220,7 +199,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["register"])) {
             <div class="form-container">
 
                 <!-- REGISTER -->
-                <form method="POST" id="registerForm" class="form-box">
+                <form method="POST" action="/pages/php/generator.php" id="registerForm" class="form-box">
+
 
                     <h2>Character Creation</h2>
 
@@ -403,8 +383,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["register"])) {
                 </form>
 
                 <!-- LOGIN -->
-                <form method="POST" action="login.php" id="loginForm" class="form-box hidden-form">
-
+                <form method="POST" action="/pages/php/generator.php" id="loginForm" class="form-box hidden-form">
+              
                     <h2>Enter Skyrim</h2>
 
                     <label>Email <span class="required">*</span></label>

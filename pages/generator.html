@@ -22,6 +22,7 @@
         body {
             background: url("/pic/BgGener.jpg") no-repeat center center/cover;
             font-family: 'Cinzel', serif;
+            font-size:18px;
             color: #e6e6e6;
             height: 100vh;
             overflow: hidden;
@@ -101,7 +102,7 @@
 
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 28px;
             font-family: "IM Fell English SC", serif;
         }
 
@@ -125,6 +126,7 @@
             border-radius: 6px;
             color: white;
             font-family: 'Cinzel', serif;
+            font-size:18px;
         }
 
         input:focus:invalid {
@@ -175,7 +177,7 @@
         .nav-btn,
         .submit-btn {
           font-family: "IM Fell English SC", serif;
-           font-size: 16px;
+           font-size: 18px;
           letter-spacing: 1px;
 }
     </style>
@@ -199,7 +201,7 @@
             <div class="form-container">
 
                 <!-- REGISTER -->
-                <form method="POST" action="/pages/php/generator.php" id="registerForm" class="form-box">
+                <form method="POST" action="/pages/php/akk.php" enctype="multipart/form-data" id="registerForm" class="form-box" >
 
 
                     <h2>Character Creation</h2>
@@ -233,6 +235,21 @@
                         <option>Dunmer</option>
                         <option>Khajiit</option>
                         <option>Argonian</option>
+                    </select>
+
+                    <label>City of Origin</label>
+                    <select name="city">
+                    
+                        <option>Whiterun</option>
+                        <option>Solitude</option>
+                        <option>Windhelm</option>
+                        <option>Riften</option>
+                        <option>Markarth</option>
+                        <option>Falkreath</option>
+                        <option>Morthal</option>
+                        <option>Dawnstar</option>
+                        <option>Winterhold</option>
+                    
                     </select>
 
                     <label>Guilds</label>
@@ -305,7 +322,7 @@
            
 
                     <label>Weapon Class</label>
-                    <select id="weaponClass" onchange="showWeaponOptions()">
+                    <select id="weaponClass"name="weapon_class" onchange="showWeaponOptions()">
                         <option value="">Select</option>
                         <option value="one">One-Handed</option>
                         <option value="two">Two-Handed</option>
@@ -314,48 +331,62 @@
                     </select>
 
                     <div id="oneOptions" class="hidden sub-options">
-                        <select>
+                    
+                        <select name="weapon_type">
                             <option>Mace</option>
                             <option>Sword</option>
                             <option>Axe</option>
                         </select>
-                        <select>
+                    
+                        <select name="weapon_material">
                             <option>Ebony</option>
                             <option>Glass</option>
                             <option>Steel</option>
                         </select>
+                    
                     </div>
 
                     <div id="twoOptions" class="hidden sub-options">
-                        <select>
+                    
+                        <select name="weapon_type">
                             <option>Greatsword</option>
                             <option>Battleaxe</option>
                             <option>Warhammer</option>
                         </select>
+                    
                     </div>
 
                     <div id="archeryOptions" class="hidden sub-options">
-                        <select>
+                    
+                        <select name="weapon_material">
                             <option>Steel</option>
                             <option>Glass</option>
                             <option>Daedric</option>
                         </select>
+                    
                     </div>
 
                     <div id="magicOptions" class="hidden sub-options">
-                        <select>
+                    
+                        <select name="weapon_type">
                             <option>Destruction</option>
                             <option>Alteration</option>
                             <option>Conjuration</option>
                         </select>
+                    
                         <div class="sub-options">
-                            <select>
+                    
+                            <select name="spell_element">
                                 <option>Fire</option>
                                 <option>Frost</option>
                                 <option>Shock</option>
                             </select>
+                    
                         </div>
+                    
                     </div>
+
+                    
 
                     <label>Standing Stone *</label>
                     <select name="standing_stone" required>
@@ -373,8 +404,13 @@
                         <option>The Warrior Stone</option>
                     </select>
 
+                    <label>Avatar</label>
+                    <input type="file" name="avatar">
+                    
+                   
                     <label>Backstory (optional)</label>
-                    <textarea name="backstory"></textarea>
+                    <textarea name="backstory" id="backstory"></textarea>
+                    <button type="button" id="generateBtn">Generate with AI</button>
 
                     <button type="submit" name="register" class="submit-btn">
                         Forge Destiny
@@ -383,7 +419,7 @@
                 </form>
 
                 <!-- LOGIN -->
-                <form method="POST" action="/pages/php/generator.php" id="loginForm" class="form-box hidden-form">
+                <form method="POST" action="/pages/php/akk.php" id="loginForm" class="form-box hidden-form">
               
                     <h2>Enter Skyrim</h2>
 
@@ -490,6 +526,28 @@
             }
         }
     </script>
+
+<!-- AI  button-->
+<script>
+    document.getElementById('generateBtn').addEventListener('click', function () {
+        const name = document.querySelector('input[name="character_name"]').value;
+
+        fetch('generate_story.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'character_name=' + encodeURIComponent(name)
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('backstory').value = data.text;
+            })
+            .catch(err => {
+                alert('Error generating story: ' + err);
+            });
+    });
+</script>
 
 </body>
 

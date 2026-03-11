@@ -38,8 +38,8 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
             background: url("/pic/BgGener.jpg") no-repeat center center/cover;
             font-family: 'Cinzel', serif;
             color: white;
-            text-align: center;
-            padding-top: 50px;
+            margin: 0;
+            padding: 40px;
         }
 
         body::before {
@@ -50,13 +50,36 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
             z-index: -1;
         }
 
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
         .card {
-            width: 550px;
-            margin: auto;
+            width: 500px;
             background: rgba(20, 20, 20, 0.85);
             border: 1px solid #777;
             border-radius: 10px;
             padding: 30px;
+            text-align: center;
+        }
+
+        .js-panel {
+            width: 500px;
+            background: rgba(20, 20, 20, 0.85);
+            border: 1px solid #777;
+            border-radius: 10px;
+            padding: 30px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .js-content {
+            text-align: center;
         }
 
         .avatar {
@@ -73,14 +96,9 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
             letter-spacing: 3px;
         }
 
-        .info {
-            margin-top: 15px;
-            font-size: 18px;
-            text-align: left;
-        }
-
         .section {
             margin-top: 20px;
+            text-align: left;
         }
 
         .section-title {
@@ -88,7 +106,6 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
             font-size: 22px;
             margin-bottom: 8px;
             border-bottom: 1px solid #777;
-            padding-bottom: 4px;
         }
 
         .backstory {
@@ -96,25 +113,41 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
             line-height: 1.6;
         }
 
-        .buttons {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
+        /* BUTTON STYLE */
 
-        button {
-            padding: 12px 20px;
-            background: linear-gradient(to right, #aaa, #ddd);
-            border: none;
+        .btn-generator-nav {
+            display: block;
+            margin: 12px auto;
+            padding: 12px;
+            background: #2d2d2d;
+            border: 1px solid #aaa;
             border-radius: 6px;
-            font-size: 15px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
             cursor: pointer;
+
+            width: 260px;
         }
 
-        button:hover {
+        .btn-generator-nav:hover {
+            background: #444;
             transform: scale(1.05);
+        }
+
+        .output {
+            margin-top: 20px;
+            font-size: 18px;
+            color: white;
+            min-height: 60px;
+        }
+
+        /* bottom buttons */
+
+        .bottom-buttons {
+            margin-top: 20px;
         }
     </style>
 
@@ -122,15 +155,18 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
 
 <body>
 
-    <div class="card">
+    <div class="container">
 
-        <img src="<?php echo $avatar; ?>" class="avatar">
+        <!-- LEFT PANEL -->
 
-        <h1><?php echo htmlspecialchars($name); ?></h1>
+        <div class="card">
 
-        <div class="info">
+            <img src="<?php echo $avatar; ?>" class="avatar">
+
+            <h1><?php echo htmlspecialchars($name); ?></h1>
 
             <div class="section">
+
                 <div class="section-title">Basic Info</div>
 
                 <p><b>Email:</b> <?php echo htmlspecialchars($email); ?></p>
@@ -142,6 +178,7 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
             </div>
 
             <div class="section">
+
                 <div class="section-title">Weapon</div>
 
                 <p><b>Class:</b> <?php echo $weapon_class; ?></p>
@@ -150,9 +187,10 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
 
             </div>
 
-            <?php if (!empty(array_filter($guilds))): ?>
+                        <?php if (!empty(array_filter($guilds))): ?>
 
                 <div class="section">
+
                     <div class="section-title">Guilds</div>
 
                     <?php
@@ -165,13 +203,14 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
 
                 </div>
 
-            <?php endif; ?>
+                        <?php endif; ?>
 
             <div class="section">
+
                 <div class="section-title">Backstory</div>
 
                 <div class="backstory">
-                    <?php echo nl2br(htmlspecialchars($backstory)); ?>
+                                        <?php echo nl2br(htmlspecialchars($backstory)); ?>
                 </div>
 
             </div>
@@ -179,19 +218,151 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
         </div>
 
 
-        <div class="buttons">
+        <!-- RIGHT PANEL -->
 
-            <form action="/index.html">
-                <button>Main Page</button>
-            </form>
+        <div class="js-panel">
 
-            <button>Edit Character</button>
+            <div class="js-content">
 
-            <button>Delete Character</button>
+                <h1>Adventurer's Board</h1>
+
+                <div id="welcome"></div>
+
+                <p>Choose your activity:</p>
+
+                <button class="btn-generator-nav" onclick="viewUsers()">
+                    View other heroes
+                </button>
+
+                <button class="btn-generator-nav" onclick="generateShout()">
+                    Generate Dragon Shout
+                </button>
+
+                <button class="btn-generator-nav" onclick="showTamrielDate()">
+                    Tamriel Calendar
+                </button>
+
+                <div id="output" class="output"></div>
+
+            </div>
+
+
+            <!-- bottom buttons -->
+
+            <div class="bottom-buttons">
+
+                <a href="/index.html" class="btn-generator-nav">
+                    Return to Main Page
+                </a>
+
+                <button class="btn-generator-nav" onclick="deleteCharacter()">
+                    Delete Character
+                </button>
+
+            </div>
 
         </div>
 
     </div>
+
+
+    <script>
+
+        /* welcome message */
+
+        let heroName = "<?php echo htmlspecialchars($name); ?>";
+
+        window.onload = function () {
+
+            document.getElementById("welcome").innerHTML =
+                "<h2>Welcome back, " + heroName + "!</h2>" +
+                "<p>Skyrim awaits your next adventure.</p>";
+
+        }
+
+
+        /* view users */
+
+        function viewUsers() {
+
+            alert("Soon you will be able to explore profiles of other heroes.");
+
+        }
+
+
+        /* shout generator */
+
+        function generateShout() {
+
+            let words = ["FUS", "RO", "DAH", "YOL", "TOOR", "SHUL", "LOK", "VAH", "KOOR"];
+
+            let shout =
+                words[Math.floor(Math.random() * words.length)] + " " +
+                words[Math.floor(Math.random() * words.length)] + " " +
+                words[Math.floor(Math.random() * words.length)];
+
+            document.getElementById("output").innerHTML =
+                "Dragon Shout: <b>" + shout + "</b>";
+
+        }
+
+
+        /* tamriel calendar */
+
+        function showTamrielDate() {
+
+            let today = new Date();
+
+            let months = [
+                "Morning Star",
+                "Sun's Dawn",
+                "First Seed",
+                "Rain's Hand",
+                "Second Seed",
+                "Midyear",
+                "Sun's Height",
+                "Last Seed",
+                "Hearthfire",
+                "Frostfall",
+                "Sun's Dusk",
+                "Evening Star"
+            ];
+
+            let days = [
+                "Sundas",
+                "Morndas",
+                "Tirdas",
+                "Middas",
+                "Turdas",
+                "Fredas",
+                "Loredas"
+            ];
+
+            let day = today.getDate();
+            let month = months[today.getMonth()];
+            let weekday = days[today.getDay()];
+            let year = today.getFullYear();
+
+            document.getElementById("output").innerHTML =
+                "Today in Tamriel:<br>" +
+                weekday + ", " + day + " of " + month + ", " + year;
+
+        }
+
+
+        /* delete confirmation */
+
+        function deleteCharacter() {
+
+            let confirmDelete = confirm("Are you sure you want to delete this character?");
+
+            if (confirmDelete) {
+                alert("Character deleted (functionality will be added later).");
+            }
+
+        }
+
+    </script>
 
 </body>
 

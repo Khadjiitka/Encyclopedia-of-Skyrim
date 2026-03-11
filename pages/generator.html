@@ -530,23 +530,44 @@
 <!-- AI  button-->
 <script>
     document.getElementById('generateBtn').addEventListener('click', function () {
-        const name = document.querySelector('input[name="character_name"]').value;
+            const name = document.querySelector('input[name="character_name"]').value;
 
+            if (!name) {
+                alert("Please enter a character name first!");
+                return;
+            }
+
+            fetch('/generate_story.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ character_name: name })
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    return res.json();
+                })
+                .then(data => {
+                    // Проверяем, что пришло: data.text или data.story
+                    document.getElementById('backstory').value = data.text || data.story || "Error";
+                })
+                .catch(err => console.error('Error generating story:', err));
+        });
+
+/*    document.getElementById('generateBtn').addEventListener('click', function () {
+        const name = document.querySelector('input[name="character_name"]').value;
+        
         fetch('generate_story.php', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'character_name=' + encodeURIComponent(name)
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ character_name: nameField.value })
         })
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
-                document.getElementById('backstory').value = data.text;
+                document.querySelector('textarea[name="backstory"]').value = data.story;
             })
-            .catch(err => {
-                alert('Error generating story: ' + err);
-            });
+            .catch(err => console.error('Error generating story:', err));
     });
+*/
 </script>
 
 </body>

@@ -187,7 +187,7 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
 
             </div>
 
-                        <?php if (!empty(array_filter($guilds))): ?>
+            <?php if (!empty(array_filter($guilds))): ?>
 
                 <div class="section">
 
@@ -203,14 +203,14 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
 
                 </div>
 
-                        <?php endif; ?>
+            <?php endif; ?>
 
             <div class="section">
 
                 <div class="section-title">Backstory</div>
 
                 <div class="backstory">
-                                        <?php echo nl2br(htmlspecialchars($backstory)); ?>
+                    <?php echo nl2br(htmlspecialchars($backstory)); ?>
                 </div>
 
             </div>
@@ -219,9 +219,7 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
 
 
         <!-- RIGHT PANEL -->
-
         <div class="js-panel">
-
             <div class="js-content">
 
                 <h1>Adventurer's Board</h1>
@@ -241,28 +239,16 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
                 <button class="btn-generator-nav" onclick="showTamrielDate()">
                     Tamriel Calendar
                 </button>
-
                 <div id="output" class="output"></div>
-
             </div>
 
 
             <!-- bottom buttons -->
-
             <div class="bottom-buttons">
-
-                <a href="/index.html" class="btn-generator-nav">
-                    Return to Main Page
-                </a>
-
-                <button class="btn-generator-nav" onclick="deleteCharacter()">
-                    Delete Character
-                </button>
-
+                <a href="/index.html" class="btn-generator-nav"> Main Page </a>
+                <button class="btn-generator-nav" onclick="deleteCharacter()">Delete Character</button>
             </div>
-
         </div>
-
     </div>
 
 

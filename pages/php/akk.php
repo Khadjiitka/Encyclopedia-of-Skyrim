@@ -35,7 +35,7 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
 
     <style>
         body {
-            background: url("/pic/BgGener.jpg") no-repeat center center/cover;
+            background: url("../../pic/BgGener.jpg") no-repeat center center/cover;
             font-family: 'Cinzel', serif;
             color: white;
             margin: 0;
@@ -245,7 +245,7 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
 
             <!-- bottom buttons -->
             <div class="bottom-buttons">
-                <a href="/index.html" class="btn-generator-nav"> Main Page </a>
+                <a href="../../index.html" class="btn-generator-nav"> Main Page </a>
                 <button class="btn-generator-nav" onclick="deleteCharacter()">Delete Character</button>
             </div>
         </div>

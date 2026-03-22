@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -179,7 +176,10 @@
           font-family: "IM Fell English SC", serif;
            font-size: 18px;
           letter-spacing: 1px;
+          
+         
 }
+
     </style>
 </head>
 
@@ -201,7 +201,7 @@
             <div class="form-container">
 
                 <!-- REGISTER -->
-                <form method="POST" action="/php/akk.php" enctype="multipart/form-data" id="registerForm" class="form-box" >
+                <form method="POST" action="/pages/php/akk.php" enctype="multipart/form-data" id="registerForm" class="form-box" >
 
 
                     <h2>Character Creation</h2>
@@ -339,9 +339,21 @@
                         </select>
                     
                         <select name="weapon_material">
-                            <option>Ebony</option>
-                            <option>Glass</option>
+                            <option>Ancient Nord</option>
+                            <option>Iron</option>
                             <option>Steel</option>
+                            <option>Silver</option>
+                            <option>Orcish</option>
+                            <option>Dwarven</option>
+                            <option>Nord Hero</option>
+                            <option>Skyforge Steel</option>
+                            <option>Nordic</option>
+                            <option>Elven</option>
+                            <option>Glass</option>
+                            <option>Stalhrim</option>
+                            <option>Ebony</option>
+                            <option>Daedric</option>
+                            <option>Dragonbone</option>
                         </select>
                     
                     </div>
@@ -353,15 +365,43 @@
                             <option>Battleaxe</option>
                             <option>Warhammer</option>
                         </select>
+                        <select name="weapon_material">
+                            <option>Ancient Nord</option>
+                            <option>Iron</option>
+                            <option>Steel</option>
+                            <option>Silver</option>
+                            <option>Orcish</option>
+                            <option>Dwarven</option>
+                            <option>Nord Hero</option>
+                            <option>Skyforge Steel</option>
+                            <option>Nordic</option>
+                            <option>Elven</option>
+                            <option>Glass</option>
+                            <option>Stalhrim</option>
+                            <option>Ebony</option>
+                            <option>Daedric</option>
+                            <option>Dragonbone</option>
+                        </select>
                     
                     </div>
 
                     <div id="archeryOptions" class="hidden sub-options">
                     
                         <select name="weapon_material">
-                            <option>Steel</option>
-                            <option>Glass</option>
-                            <option>Daedric</option>
+                            <option>Ancient Nord</option>
+                            <option>Long Bow</option>
+                            <option>Hunting Bow</option>
+                            <option>Imperial Bow</option>
+                            <option>Nordic Bow</option>
+                            <option>Orcish Bow</option>
+                            <option>Dwarven Bow</option>
+                            <option>Elven Bow</option>
+                            <option>Glass Bow</option>
+                            <option>Auriel's Bow</option>
+                            <option>Stalhrim Bow</option>
+                            <option>Ebony Bow</option>
+                            <option>Daedric Bow</option>
+                            <option>Dragonbone Bow</option>
                         </select>
                     
                     </div>
@@ -403,7 +443,9 @@
                         <option>The Tower Stone</option>
                         <option>The Warrior Stone</option>
                     </select>
-
+<p id="stone-description" style="font-size: 14px; color: #aaa; margin-top: 10px; font-style: italic; min-height: 40px;">
+    Choose a standing stone to see its effect...
+</p>
                     <label>Avatar</label>
                     <input type="file" name="avatar">
                     
@@ -419,7 +461,7 @@
                 </form>
 
                 <!-- LOGIN -->
-                <form method="POST" action="/pages/php/akk.php" id="loginForm" class="form-box hidden-form">
+                <form method="POST" action="php/akk.php" id="loginForm" class="form-box hidden-form">
               
                     <h2>Enter Skyrim</h2>
 
@@ -537,7 +579,7 @@
                 return;
             }
 
-            fetch('/generate_story.php', {
+            fetch('../generate_story.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({ character_name: name })
@@ -547,11 +589,13 @@
                     return res.json();
                 })
                 .then(data => {
-                    // Проверяем, что пришло: data.text или data.story
-                    document.getElementById('backstory').value = data.text || data.story || "Error";
+                    console.log(data); 
+                    document.getElementById('backstory').value =
+                        data.text || data.story || "Error";
                 })
                 .catch(err => console.error('Error generating story:', err));
         });
+        
 
 /*    document.getElementById('generateBtn').addEventListener('click', function () {
         const name = document.querySelector('input[name="character_name"]').value;
@@ -570,6 +614,30 @@
 */
 </script>
 
+<script>
+    const stoneDescriptions = {
+        "The Apprentice Stone": "+100 to magicka but magic is 100% more powerful and you take 25% more damage from magic.",
+        "The Atronach Stone": "+50 к магии, 50% поглощения заклинаний, но магия восстанавливается на 50% медленнее.",
+        "The Lady Stone": "Здоровье и запас сил восстанавливаются на 25% быстрее.",
+        "The Lord Stone": "+50 к защите и 25% сопротивления магии.",
+        "The Lover Stone": "Все навыки улучшаются на 15% быстрее.",
+        "The Mage Stone": "Магические навыки улучшаются на 20% быстрее.",
+        "The Ritual Stone": "Раз в день позволяет оживить всех мертвецов поблизости, чтобы они сражались за вас.",
+        "The Serpent Stone": "Парализует цель на 5 секунд и наносит 25 единиц урона ядом раз в день.",
+        "The Steed Stone": "+100 к грузоподъемности и отсутствие штрафа к весу брони.",
+        "The Thief Stone": "Скрытные навыки улучшаются на 20% быстрее.",
+        "The Tower Stone": "Позволяет раз в день автоматически открыть любой замок уровня 'Эксперт' и ниже.",
+        "The Warrior Stone": "Боевые навыки улучшаются на 20% быстрее."
+    };
+
+    const stoneSelect = document.querySelector('select[name="standing_stone"]');
+    const descriptionDisplay = document.getElementById('stone-description');
+
+    stoneSelect.addEventListener('change', function () {
+        const selectedStone = this.value;
+        descriptionDisplay.textContent = stoneDescriptions[selectedStone] || "Выберите камень, чтобы увидеть его эффект...";
+    });
+</script>
 </body>
 
 </html>

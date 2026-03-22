@@ -439,6 +439,7 @@
                         <option>The Ritual Stone</option>
                         <option>The Serpent Stone</option>
                         <option>The Steed Stone</option>
+                        <option>The Shadow Stone</option>
                         <option>The Thief Stone</option>
                         <option>The Tower Stone</option>
                         <option>The Warrior Stone</option>
@@ -595,39 +596,23 @@
                 })
                 .catch(err => console.error('Error generating story:', err));
         });
-        
-
-/*    document.getElementById('generateBtn').addEventListener('click', function () {
-        const name = document.querySelector('input[name="character_name"]').value;
-        
-        fetch('generate_story.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ character_name: nameField.value })
-        })
-            .then(res => res.json())
-            .then(data => {
-                document.querySelector('textarea[name="backstory"]').value = data.story;
-            })
-            .catch(err => console.error('Error generating story:', err));
-    });
-*/
 </script>
 
 <script>
     const stoneDescriptions = {
-        "The Apprentice Stone": "+100 to magicka but magic is 100% more powerful and you take 25% more damage from magic.",
-        "The Atronach Stone": "+50 к магии, 50% поглощения заклинаний, но магия восстанавливается на 50% медленнее.",
-        "The Lady Stone": "Здоровье и запас сил восстанавливаются на 25% быстрее.",
-        "The Lord Stone": "+50 к защите и 25% сопротивления магии.",
-        "The Lover Stone": "Все навыки улучшаются на 15% быстрее.",
-        "The Mage Stone": "Магические навыки улучшаются на 20% быстрее.",
-        "The Ritual Stone": "Раз в день позволяет оживить всех мертвецов поблизости, чтобы они сражались за вас.",
-        "The Serpent Stone": "Парализует цель на 5 секунд и наносит 25 единиц урона ядом раз в день.",
-        "The Steed Stone": "+100 к грузоподъемности и отсутствие штрафа к весу брони.",
-        "The Thief Stone": "Скрытные навыки улучшаются на 20% быстрее.",
-        "The Tower Stone": "Позволяет раз в день автоматически открыть любой замок уровня 'Эксперт' и ниже.",
-        "The Warrior Stone": "Боевые навыки улучшаются на 20% быстрее."
+        "The Apprentice Stone": "+100% Magicka regeneration, but grants 100% Weakness to Magic. High risk, high reward for casters.",
+        "The Atronach Stone": "Grants +50 Magicka and 50% Spell Absorption, but slows Magicka regeneration by 50%.",
+        "The Lady Stone": "Regenerate both Health and Stamina 25% faster.",
+        "The Lord Stone": "Provides +50 Armor Rating and 25% Magic Resistance. Excellent for defensive builds.",
+        "The Lover Stone": "All skills increase 15% faster.",
+        "The Mage Stone": "Magic skills increase 20% faster.",
+        "The Ritual Stone": "Allows you to reanimate all nearby corpses to fight for you once per day.",
+        "The Serpent Stone": "Ranged attack that paralyzes a target for 5 seconds and deals 25 poison damage once per day.",
+        "The Steed Stone": "Increases Carry Weight by 100 and makes equipped armor weightless with no movement penalty.",
+        "The Shadow Stone": "Grants Invisibility for 60 seconds once per day.",
+        "The Thief Stone": "Stealth skills increase 20% faster.",
+        "The Tower Stone": "Automatically unlocks any Expert level lock (or lower) once per day.",
+        "The Warrior Stone": "Combat skills increase 20% faster."
     };
 
     const stoneSelect = document.querySelector('select[name="standing_stone"]');
@@ -635,9 +620,8 @@
 
     stoneSelect.addEventListener('change', function () {
         const selectedStone = this.value;
-        descriptionDisplay.textContent = stoneDescriptions[selectedStone] || "Выберите камень, чтобы увидеть его эффект...";
+        descriptionDisplay.textContent = stoneDescriptions[selectedStone] || "Choose a standing stone to see its effect...";
     });
 </script>
 </body>
-
 </html>

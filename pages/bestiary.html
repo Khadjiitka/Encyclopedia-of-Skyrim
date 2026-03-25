@@ -5,10 +5,10 @@
 <title>Bestiary of Skyrim</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
 
-<link rel="style" href="../style/style.css">
 <link rel="style" href="../style/bestiary.css">
 
 <style>
+
  /* GLOBAL */
 body {
     margin: 0;
@@ -20,145 +20,86 @@ body {
     overflow-x: hidden;
 }
 
-/* Fog overlay */
 .background-fog {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.65); 
+    backdrop-filter: blur(20px);        
+    -webkit-backdrop-filter: blur(20px); 
+    
     z-index: -1;
-}
-
-/* NAVIGATION */
-.side-menu {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 260px;
-    height: 100%;
-    background: rgba(20,20,20,0.8);
-    padding: 20px;
-    border-right: 2px solid #555;
-    box-shadow: 4px 0 20px rgba(0,0,0,0.6);
-}
-
-.side-menu h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #ddd;
-    font-size: 22px;
-    font-family: "IM Fell English SC", serif;
-}
-
-.side-menu ul {
-    list-style: none;
-    padding: 0;
-}
-
-.side-menu ul li {
-    margin: 12px 0;
-}
-
-.side-menu ul li a {
-    color: #cfcfcf;
-    text-decoration: none;
-    font-size: 18px;
-    transition: 0.3s;
-}
-
-.side-menu ul li a:hover {
-    color: white;
-    margin-left: 5px;
-}
-
-.btn-generator-nav {
-    display: block;
-    margin-top: 30px;
-    padding: 12px;
-    background: #2d2d2d;
-    border: 1px solid #aaa;
-    border-radius: 6px;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-size: 18px;
-    transition: 0.3s;
-}
-
-.btn-generator-nav:hover {
-    background: #444;
-    transform: scale(1.05);
 }
 
 /* CONTENT */
 .content {
-    margin-left: 300px;
-    padding: 40px 50px;
+    margin: 0 auto; 
+    max-width: 1400px; /* Увеличили макс. ширину, чтобы влезло больше крупных картинок */
+    padding: 60px 20px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* центрируем все содержимое */
+    align-items: center; 
 }
 
 h1 {
     text-align: center;
-    font-size: 48px;
-    margin-bottom: 35px;
-    text-shadow: 0 0 10px black;
+    font-size: 56px; /* Чуть увеличили заголовок */
+    margin-bottom: 50px;
+    text-shadow: 0 0 15px black;
 }
 
 .category-section {
-    margin-bottom: 60px;
+    margin-bottom: 100px; /* Увеличили отступ между категориями (Драконы -> Животные) */
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* центрируем блок категории */
+    align-items: center; 
 }
 
 h2.category-title {
-    font-size: 32px;
-    margin: 25px 0;
+    font-size: 38px;
+    margin-bottom: 40px; /* Увеличили отступ от заголовка до картинок */
     text-shadow: 0 0 10px black;
     text-align: center;
 }
 
-/* CATEGORY LIST — максимум 3 картинки в ряд */
+/* CATEGORY LIST */
 .category-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 25px;
-    justify-content: center; /* центрируем сетку */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px; /* Увеличили расстояние МЕЖДУ картинками */
+    justify-content: center; 
     width: 100%;
 }
 
-/* CATEGORY ITEM */
+/* CATEGORY ITEM — УВЕЛИЧЕННЫЙ РАЗМЕР */
 .category-item {
-    width: 220px;
-    height: 280px;
-    border-radius: 12px;
+    width: 300px;  /* Было 220px — теперь картинки крупнее */
+    height: 380px; /* Было 280px */
+    border-radius: 15px;
     overflow: hidden;
     position: relative;
     cursor: pointer;
-    box-shadow: 0 0 15px black;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
     transition: transform 0.4s, box-shadow 0.4s;
+    text-decoration: none;
 }
 
 .category-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: 0.4s;
+    transition: 0.6s;
 }
 
 /* Hover effect */
 .category-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px black;
+    transform: translateY(-10px) scale(1.03); /* Теперь карточка чуть «всплывает» */
+    box-shadow: 0 15px 40px black;
 }
 
 .category-item:hover img {
-    filter: blur(3px) brightness(0.85);
-    transform: scale(1.08);
+    filter: blur(2px) brightness(0.7);
+    transform: scale(1.1);
 }
 
 /* LABEL */
@@ -166,22 +107,88 @@ h2.category-title {
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: 12px;
-    background: rgba(0,0,0,0.65);
+    padding: 20px 0; /* Увеличили плашку с текстом */
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
     color: #fff;
-    font-size: 15px;
+    font-size: 18px; /* Текст стал крупнее */
     text-align: center;
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(20px);
     transition: 0.4s;
 }
 
-/* Smooth reveal */
 .category-item:hover .category-info {
     opacity: 1;
     transform: translateY(0);
 }
 
+/* Кнопка */
+.back-btn {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    background: #2d2d2d;
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 18px;
+    text-decoration: none;
+    transition: 0.3s;
+    z-index: 100;
+    border: 1px solid #555;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+}
+
+.back-btn:hover {
+    background: #eee;
+    color: #111;
+}
+/* Поиск */
+.search-container {
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 400px;
+}
+#monsterSearch {
+    width: 100%;
+    padding: 12px 20px;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: white;
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+}
+#monsterSearch:focus { border-color: #eee; box-shadow: 0 0 10px rgba(255,255,255,0.2); }
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px); /* Усиленное размытие при открытии */
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    background: #1a1a1a;
+    border: 2px solid #444;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 800px;
+    position: relative;
+    padding: 30px;
+    box-shadow: 0 0 50px black;
+}
+.modal-body { display: flex; gap: 30px; align-items: center; }
+.modal-body img { width: 300px; height: 400px; object-fit: cover; border-radius: 10px; border: 1px solid #555; }
+.close-modal { position: absolute; top: 15px; right: 20px; font-size: 30px; cursor: pointer; color: #aaa; }
+.close-modal:hover { color: white; }
+.modal-text h2 { font-size: 36px; margin-top: 0; }
 </style>
 
 </head>
@@ -189,25 +196,31 @@ h2.category-title {
 <body>
 
 
-<!-- NAVIGATION -->
-<nav class="side-menu">
-    <h2>Navigation</h2>
-    <ul>
-        <li><a href="../index.html">Main page</a></li>
-        <li><a href="../pages/history.html">History of Skyrim</a></li>
-        <li><a href="../pages/map.html">Map</a></li>
-        <li><a href="../pages/races.html">Races</a></li>
-        <li><a href="../pages/skills.html">Skills & Perks</a></li>
-        <li><a href="../pages/guilds.html">Guilds</a></li>
-        <li><a href="../pages/bestiary.html">Bestiary</a></li>
-    
-    </ul>
-    <a href="../pages/generator.html" class="btn-generator-nav">Create Your Character</a>
-</nav>
+
 
 <div class="content">
 <h1>Bestiary of Skyrim</h1>
 
+<div class="search-container">
+    <input type="text" id="monsterSearch" placeholder="Search creatures of Skyrim..." autocomplete="off">
+</div>
+
+<div id="monsterModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-body">
+            <img id="modalImg" src="" alt="">
+            <div class="modal-text">
+                <h2 id="modalName">Name</h2>
+                <hr>
+                <p><strong>Health:</strong> <span id="modalHP">???</span></p>
+                <p><strong>Weakness:</strong> <span id="modalWeak">None</span></p>
+                <p><strong>Loot:</strong> <span id="modalLoot">Gold, Bones</span></p>
+                <p class="modal-desc">Detailed lore description from the Elder Scrolls scrolls...</p>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Dragons -->
 <div class="category-section">
 <h2 class="category-title">Dragons</h2>
@@ -339,7 +352,7 @@ h2.category-title {
     </a>
     <a class="category-item" >
         <img src="../pic/bestiary/gaint.jpg">
-        <div class="category-info">Gaint</div>
+        <div class="category-info">Giant</div>
     </a>
 </div>
 </div>
@@ -374,6 +387,228 @@ h2.category-title {
     </a>
 </div>
 </div>
+<a href="../index.html" class="back-btn">Main Page</a>
 
+<script>
+    // ---  ЖИВОЙ ПОИСК ---
+    const searchInput = document.getElementById('monsterSearch');
+    const monsterss = document.querySelectorAll('.category-item');
+
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        monsterss.forEach(monster => {
+            const name = monster.querySelector('.category-info').innerText.toLowerCase();
+            // Если имя совпадает, показываем, если нет — скрываем
+            if (name.includes(term)) {
+                monster.style.display = "block";
+            } else {
+                monster.style.display = "none";
+            }
+        });
+
+        // Скрываем пустые заголовки категорий
+        document.querySelectorAll('.category-section').forEach(section => {
+            const hasVisible = Array.from(section.querySelectorAll('.category-item'))
+                .some(m => m.style.display !== "none");
+            section.style.display = hasVisible ? "flex" : "none";
+        });
+    });
+
+    // ---  МОДАЛЬНЫЕ ОКНА ---
+    // 1. Сначала объявляем переменные элементов
+        const modal = document.getElementById('monsterModal');
+        const closeModal = document.querySelector('.close-modal');
+        const monsters = document.querySelectorAll('.category-item'); // Добавили эту строку!
+
+        // 2. База данных существ
+        const monsterStats = {
+            "Ancient Dragon": {
+                hp: "3071", weak: "Dragonrend", loot: "Dragon Scales, Bone",
+                desc: "Ancient masters of the sky. Their scales are as hard as daedric steel, and their Shout can shatter mountains."
+            },
+            "Elder Dragon": {
+                hp: "2255", weak: "Dragonrend", loot: "Dragon Scales, Bone",
+                desc: "Bronze-skinned tyrants who have survived since the Merethic Era. They command the elements with terrifying ease."
+            },
+            "Blood Dragon": {
+                hp: "1421", weak: "Dragonrend", loot: "Dragon Scales, Bone",
+                desc: "Recognized by their finned crowns and tails, these aggressive hunters track their prey across the tundra."
+            },
+            "Fire Dragon": {
+                hp: "905", weak: "Frost", loot: "Dragon Scales, Bone",
+                desc: "Common but deadly, these Dovah embody the fury of Akatosh's fire. They are weak against the bite of frost."
+            },
+            "Ice Dragon": {
+                hp: "1055", weak: "Fire", loot: "Dragon Scales, Bone",
+                desc: "Wreathed in the eternal cold of the Throat of the World. Their breath freezes the very blood in your veins."
+            },
+            "Legendary Dragon": {
+                hp: "4163", weak: "Dragonrend", loot: "Dragon Scales, Bone",
+                desc: "The most powerful of their kind. Only a true Dragonborn can hope to survive a confrontation with these purple-scaled myths."
+            },
+            "Troll": {
+                hp: "280", weak: "Fire", loot: "Troll Fat",
+                desc: "Fearsome predators with three eyes. Their wounds heal almost instantly unless cauterized with flame."
+            },
+            "Bear": {
+                hp: "200", weak: "None", loot: "Bear Pelt, Raw Meat",
+                desc: "The masters of the forests. A single swipe from an angry Cave Bear can end an adventurer's journey."
+            },
+            "Sabre Cat": {
+                hp: "150", weak: "None", loot: "Sabre Cat Tooth",
+                desc: "Fast, silent, and lethal. They strike from the shadows before you even hear the rustle of the grass."
+            },
+            "Wolf": {
+                hp: "20", weak: "None", loot: "Wolf Pelt",
+                desc: "They hunt in packs. One wolf is a nuisance; a pack is a death sentence for the unprepared traveler."
+            },
+            "Spider": {
+                hp: "150", weak: "Fire", loot: "Frostbite Venom",
+                desc: "Frostbite Spiders haunt the dark corners of Skyrim, weaving webs to trap the unwary."
+            },
+            "Crab": {
+                hp: "35", weak: "None", loot: "Mudcrab Chitin",
+                desc: "Disguised as ordinary rocks, these armored scavengers are found near almost every body of water."
+            },
+            "Mammoth": {
+                hp: "931", weak: "None", loot: "Mammoth Tusk",
+                desc: "Gently giants of the plains, protected by the Giants. To kill one is to invite the wrath of their herders."
+            },
+            "Death Hound": {
+                hp: "121", weak: "Fire", loot: "Death Bell",
+                desc: "Vampiric beasts with skin as cold as the grave. They serve their masters in the dark halls of Castle Volkihar."
+            },
+            "Ice Wraith": {
+                hp: "193", weak: "Fire", loot: "Ice Wraith Teeth",
+                desc: "Living shards of ice found in the highest peaks. They are nearly invisible against the snow."
+            },
+            "Falmer": {
+                hp: "180", weak: "None", loot: "Falmer Ear",
+                desc: "The degenerate remains of the Snow Elves. Blind and bitter, they dwell in the deep places of the world."
+            },
+            "Dwarven Sphere": {
+                hp: "200", weak: "Shock", loot: "Dwarven Oil",
+                desc: "Ancient clockwork guardians that unfold from a simple ball into a deadly, blade-wielding warrior."
+            },
+            "Dwarven Spider": {
+                hp: "100", weak: "Shock", loot: "Dwarven Oil",
+                desc: "Scuttling automatons that maintain the ruins. They strike with electrical shocks to defend their territory."
+            },
+            "Dwarven Centurion": {
+                hp: "1000", weak: "Shock", loot: "Dynamo Core",
+                desc: "The pinnacle of Dwemer engineering. These massive brass giants crush intruders and blast them with boiling steam."
+            },
+            "Chaurus": {
+                hp: "253", weak: "None", loot: "Chaurus Eggs",
+                desc: "Large, venomous insects bred by the Falmer. Their chitin is thick, and their spit is pure acid."
+            },
+            "Chaurus Hunter": {
+                hp: "345", weak: "None", loot: "Hunter Antennae",
+                desc: "The final, winged stage of a Chaurus's life. They are faster, smarter, and far more dangerous."
+            },
+            "Spriggan": {
+                hp: "240", weak: "Fire", loot: "Taproot",
+                desc: "Nature's guardians. They can command the animals of the forest and heal themselves by drawing power from the earth."
+            },
+            "Hagraven": {
+                hp: "471", weak: "None", loot: "Hagraven Claw",
+                desc: "Witches who traded their humanity for dark power. Half-woman, half-bird, and entirely consumed by malice."
+            },
+            "Werewolf": {
+                hp: "250", weak: "Silver", loot: "Wolf Pelt",
+                desc: "Cursed with lycanthropy, these beasts possess inhuman strength and speed. Beware the full moon."
+            },
+            "Vampire Lord": {
+                hp: "800", weak: "Fire, Sun", loot: "Vampire Dust",
+                desc: "The purest form of the vampire curse. They command the night and can drain the life from a man in seconds."
+            },
+            "Giant": {
+                hp: "591", weak: "None", loot: "Giant's Toe",
+                desc: "Nomadic herders of the plains. They are peaceful unless provoked, but one club swing can send you to the stars."
+            },
+            "Fire Atronach": {
+                hp: "163", weak: "Frost", loot: "Fire Salt",
+                desc: "A daedra from the planes of Oblivion. They hover above the ground, wreathed in perpetual flame."
+            },
+            "Frost Atronach": {
+                hp: "326", weak: "Fire", loot: "Frost Salt",
+                desc: "Massive golems of living ice. Their presence slows their enemies, and their blows are like falling glaciers."
+            },
+            "Storm Atronach": {
+                hp: "412", weak: "None", loot: "Void Salt",
+                desc: "A chaotic swirl of rocks and lightning. They are the most powerful of the elemental atronachs."
+            },
+            "Lurker": {
+                hp: "963", weak: "None", loot: "Lurker Skin",
+                desc: "Monstrous servants of Hermaeus Mora. They emerge from the black waters of Apocrypha to crush the Prince's enemies."
+            },
+            "Seeker": {
+                hp: "300", weak: "Shock", loot: "Book, Ink",
+                desc: "Eerie, multi-limbed guardians of forbidden knowledge. They can split themselves into shadows to confuse their prey."
+            },
+            "Wispmother": {
+                hp: "750", weak: "Fire", loot: "Wisp Wrappings",
+                desc: "Mysterious spirits of the cold. Some say they are ancient liches, others say they are a manifestation of the frost itself."
+            }
+        };
+
+        // 3. Логика открытия окна
+        monsters.forEach(monster => {
+            monster.onclick = function () {
+                const name = this.querySelector('.category-info').innerText;
+                const imgPath = this.querySelector('img').src;
+
+                // Находим данные в базе
+                const stats = monsterStats[name] || {
+                    hp: "???",
+                    weak: "Unknown",
+                    loot: "Random",
+                    desc: "Information about this creature is lost in the scrolls of time."
+                };
+
+                // Заполняем модальное окно данными
+                document.getElementById('modalName').innerText = name;
+                document.getElementById('modalImg').src = imgPath;
+                document.getElementById('modalHP').innerText = stats.hp;
+                document.getElementById('modalWeak').innerText = stats.weak;
+                document.getElementById('modalLoot').innerText = stats.loot;
+
+                // ВАЖНО: Находим описание и обновляем его ТОЛЬКО ЗДЕСЬ
+                const descElement = document.querySelector('.modal-desc');
+                if (descElement) {
+                    descElement.innerText = stats.desc;
+                }
+
+                // Показываем окно
+                modal.style.display = "flex";
+            }
+        });
+
+        // 4. Закрытие окна
+        closeModal.onclick = () => { modal.style.display = "none"; };
+
+        window.onclick = (e) => {
+            if (e.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    // --- SCROLL REVEAL (ПЛАВНОЕ ПОЯВЛЕНИЕ) ---
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+            }
+        });
+    }, observerOptions);
+
+    monsters.forEach(monster => {
+        monster.style.opacity = "0";
+        monster.style.transform = "translateY(40px)";
+        monster.style.transition = "all 0.6s ease-out";
+        observer.observe(monster);
+    });
+</script>
 </body>
 </html>

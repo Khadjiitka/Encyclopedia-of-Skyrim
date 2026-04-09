@@ -34,6 +34,28 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
         rel="stylesheet">
 
     <style>
+        /* Слой перехода */
+        .page-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 9999;
+            pointer-events: none;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .page-transition-overlay.fade-out {
+            opacity: 0;
+        }
+
+        .page-transition-overlay.fade-in {
+            opacity: 1;
+            pointer-events: all;
+        }
+
         body {
             background: url("../../pic/BgGener.jpg") no-repeat center center/cover;
             font-family: 'Cinzel', serif;
@@ -154,6 +176,7 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
 </head>
 
 <body>
+    <div class="page-transition-overlay"></div>
 
     <div class="container">
 
@@ -348,6 +371,41 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
 
         }
 
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const overlay = document.querySelector('.page-transition-overlay');
+
+            // 1. При загрузке страницы плавно убираем оверлей
+            if (overlay) {
+                // Небольшая задержка, чтобы браузер успел отрисовать начало анимации
+                setTimeout(() => {
+                    overlay.classList.add('fade-out');
+                }, 100);
+            }
+
+            // 2. Перехватываем клики по ссылкам для плавного ухода
+            const links = document.querySelectorAll('a');
+
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+
+                    // Проверяем, что ссылка ведет на другую страницу, а не является якорем (#) или внешней
+                    if (href && !href.startsWith('#') && !link.target && href !== 'javascript:void(0);') {
+                        e.preventDefault(); // Останавливаем мгновенный переход
+
+                        overlay.classList.remove('fade-out');
+                        overlay.classList.add('fade-in');
+
+                        // Ждем окончания анимации (0.6s) и переходим
+                        setTimeout(() => {
+                            window.location.href = href;
+                        }, 600);
+                    }
+                });
+            });
+        });
     </script>
 
 </body>

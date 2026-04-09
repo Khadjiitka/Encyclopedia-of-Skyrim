@@ -8,6 +8,27 @@
 <link rel="style" href="../style/bestiary.css">
 
 <style>
+/* Слой перехода */
+.page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000; 
+    z-index: 9999;
+    pointer-events: none; 
+    transition: opacity 0.6s ease-in-out;
+}
+
+.page-transition-overlay.fade-out {
+    opacity: 0;
+}
+
+.page-transition-overlay.fade-in {
+    opacity: 1;
+    pointer-events: all;
+}
 
  /* GLOBAL */
 body {
@@ -33,7 +54,7 @@ body {
 /* CONTENT */
 .content {
     margin: 0 auto; 
-    max-width: 1400px; /* Увеличили макс. ширину, чтобы влезло больше крупных картинок */
+    max-width: 1400px; 
     padding: 60px 20px;
     display: flex;
     flex-direction: column;
@@ -194,9 +215,7 @@ h2.category-title {
 </head>
 
 <body>
-
-
-
+<div class="page-transition-overlay"></div>
 
 <div class="content">
 <h1>Bestiary of Skyrim</h1>
@@ -593,21 +612,70 @@ h2.category-title {
             }
         };
     // --- SCROLL REVEAL (ПЛАВНОЕ ПОЯВЛЕНИЕ) ---
-    const observerOptions = { threshold: 0.1 };
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
-            }
-        });
-    }, observerOptions);
+        const observerOptions = {
+            threshold: 0.1, // Элемент начнет анимироваться, когда 10% его площади появится в кадре
+            rootMargin: "0px 0px -50px 0px" // Небольшой отступ снизу для более естественного эффекта
+        };
 
-    monsters.forEach(monster => {
-        monster.style.opacity = "0";
-        monster.style.transform = "translateY(40px)";
-        monster.style.transition = "all 0.6s ease-out";
-        observer.observe(monster);
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Когда элемент входит в область видимости
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                } else {
+                    // Когда элемент уходит (скроллим вверх или далеко вниз)
+                    entry.target.style.opacity = "0";
+                    entry.target.style.transform = "translateY(50px)";
+                }
+            });
+        }, observerOptions);
+
+        // Применяем ко всем карточкам монстров и заголовкам категорий
+        const elementsToAnimate = document.querySelectorAll('.category-item, .category-title, h1');
+
+        elementsToAnimate.forEach(el => {
+            // Начальное состояние
+            el.style.opacity = "0";
+            el.style.transform = "translateY(50px)";
+            el.style.transition = "all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1)"; // Плавный "вылет"
+
+            scrollObserver.observe(el);
+        });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const overlay = document.querySelector('.page-transition-overlay');
+
+        // 1. При загрузке страницы плавно убираем оверлей
+        if (overlay) {
+            // Небольшая задержка, чтобы браузер успел отрисовать начало анимации
+            setTimeout(() => {
+                overlay.classList.add('fade-out');
+            }, 100);
+        }
+
+        // 2. Перехватываем клики по ссылкам для плавного ухода
+        const links = document.querySelectorAll('a');
+
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+
+                // Проверяем, что ссылка ведет на другую страницу, а не является якорем (#) или внешней
+                if (href && !href.startsWith('#') && !link.target && href !== 'javascript:void(0);') {
+                    e.preventDefault(); // Останавливаем мгновенный переход
+
+                    overlay.classList.remove('fade-out');
+                    overlay.classList.add('fade-in');
+
+                    // Ждем окончания анимации (0.6s) и переходим
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 600);
+                }
+            });
+        });
     });
 </script>
 </body>

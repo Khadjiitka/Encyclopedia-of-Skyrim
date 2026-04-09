@@ -11,6 +11,7 @@
 </head>
 
 <body>
+<div class="page-transition-overlay"></div>
 
  <!-- NAVIGATION -->
 <nav class="side-menu">
@@ -89,6 +90,41 @@
 
         });
 
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const overlay = document.querySelector('.page-transition-overlay');
+
+            // 1. При загрузке страницы плавно убираем оверлей
+            if (overlay) {
+                // Небольшая задержка, чтобы браузер успел отрисовать начало анимации
+                setTimeout(() => {
+                    overlay.classList.add('fade-out');
+                }, 100);
+            }
+
+            // 2. Перехватываем клики по ссылкам для плавного ухода
+            const links = document.querySelectorAll('a');
+
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+
+                    // Проверяем, что ссылка ведет на другую страницу, а не является якорем (#) или внешней
+                    if (href && !href.startsWith('#') && !link.target && href !== 'javascript:void(0);') {
+                        e.preventDefault(); // Останавливаем мгновенный переход
+
+                        overlay.classList.remove('fade-out');
+                        overlay.classList.add('fade-in');
+
+                        // Ждем окончания анимации (0.6s) и переходим
+                        setTimeout(() => {
+                            window.location.href = href;
+                        }, 600);
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>

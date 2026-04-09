@@ -8,6 +8,28 @@
         rel="stylesheet">
 
     <style>
+        /* Слой перехода */
+.page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000; 
+    z-index: 9999;
+    pointer-events: none; 
+    transition: opacity 0.6s ease-in-out;
+}
+
+.page-transition-overlay.fade-out {
+    opacity: 0;
+}
+
+.page-transition-overlay.fade-in {
+    opacity: 1;
+    pointer-events: all;
+}
+
         body {
             margin: 0;
             padding: 0;
@@ -73,35 +95,39 @@
             gap: 40px;
             padding-bottom: 100px;
         }
-
+           
         .guild-item {
             position: relative;
             width: 100%;
             height: 250px;
             border-radius: 12px;
-            overflow: hidden;
+            overflow: hidden; 
             cursor: pointer;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
             border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #1a1a1a; 
+        }
+
+        .guild-item:hover {
+            transform: translateY(-10px) scale(1.05); 
+            border-color: #bdab8d;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 15px rgba(189, 171, 141, 0.3);
+            z-index: 10; 
         }
 
         .guild-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.7);
-            transition: 0.5s;
-        }
-
-        .guild-item:hover {
-            transform: translateY(-5px);
-            border-color: #bdab8d;
+            filter: brightness(0.6);
+            transition: filter 0.5s ease; 
         }
 
         .guild-item:hover img {
-            filter: brightness(1) scale(1.05);
+            filter: brightness(1);
         }
+
 
         .guild-info {
             position: absolute;
@@ -172,7 +198,6 @@
             margin-bottom: 20px;
         }
 
-        /* Галерея внутри модалки */
         .modal-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -244,7 +269,7 @@
     opacity: 1;
     transform: translateY(0) scale(1);
 }
-                /* КНОПКА НАЗАД */
+               
 .back-btn{
     position:fixed;
     right:20px;
@@ -267,6 +292,8 @@
 </head>
 
 <body>
+    <div class="page-transition-overlay"></div>
+
     <div class="background-fog"></div>
     <div class="content">
         <h1>Guilds of Skyrim</h1>
@@ -521,6 +548,41 @@
                 } else {
                     item.style.display = "none";
                 }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const overlay = document.querySelector('.page-transition-overlay');
+
+            // 1. При загрузке страницы плавно убираем оверлей
+            if (overlay) {
+                // Небольшая задержка, чтобы браузер успел отрисовать начало анимации
+                setTimeout(() => {
+                    overlay.classList.add('fade-out');
+                }, 100);
+            }
+
+            // 2. Перехватываем клики по ссылкам для плавного ухода
+            const links = document.querySelectorAll('a');
+
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+
+                    // Проверяем, что ссылка ведет на другую страницу, а не является якорем (#) или внешней
+                    if (href && !href.startsWith('#') && !link.target && href !== 'javascript:void(0);') {
+                        e.preventDefault(); // Останавливаем мгновенный переход
+
+                        overlay.classList.remove('fade-out');
+                        overlay.classList.add('fade-in');
+
+                        // Ждем окончания анимации (0.6s) и переходим
+                        setTimeout(() => {
+                            window.location.href = href;
+                        }, 600);
+                    }
+                });
             });
         });
     </script>

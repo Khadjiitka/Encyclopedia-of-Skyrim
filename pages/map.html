@@ -9,10 +9,6 @@
         rel="stylesheet">
 
     <style>
-        /* =========================
-   GLOBAL SETTINGS
-========================= */
-
 html {
     scroll-behavior: smooth;
 }
@@ -30,10 +26,6 @@ body {
     justify-content: center;
 }
 
-/* =========================
-   LAYOUT
-========================= */
-
 .content-split {
     display: flex;
     gap: 100px;
@@ -42,9 +34,6 @@ body {
     width: 100%;
 }
 
-/* =========================
-   LEFT SIDE (MAP)
-========================= */
 
 .map-side {
     width: 60%;
@@ -54,9 +43,6 @@ body {
     align-items: center;
 }
 
-/* =========================
-   BUTTONS (GAME STYLE)
-========================= */
 
 .map-switch {
     margin-bottom: 25px;
@@ -92,12 +78,8 @@ body {
     box-shadow: 0 0 25px rgba(255,255,255,0.25);
 }
 
-/* =========================
-   MAP CONTAINER
-========================= */
-
 .map-container {
-    width: 120%;
+    width: 100%;
     margin-top: 20px;
 
     border-radius: 28px;
@@ -110,7 +92,6 @@ body {
         inset 0 0 40px rgba(255,255,255,0.05);
 }
 
-/* свет сверху */
 .map-container::after {
     content: "";
     position: absolute;
@@ -125,10 +106,6 @@ body {
 
     transition: transform 0.25s ease, opacity 0.4s;
 }
-
-/* =========================
-   RIGHT SIDE (INFO)
-========================= */
 
 .info-side {
     width: 50%;
@@ -150,9 +127,7 @@ body {
     overflow-y: auto;
 }
 
-/* =========================
-   TEXT
-========================= */
+
 
 .info-text {
     max-width: 600px;
@@ -177,9 +152,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* =========================
-   SCROLL ANIMATION
-========================= */
 
 .scroll-animate {
     opacity: 0;
@@ -191,10 +163,6 @@ body {
     opacity: 1;
     transform: translateY(0);
 }
-
-/* =========================
-   BACK BUTTON
-========================= */
 
 .back-btn {
     position: fixed;
@@ -216,10 +184,6 @@ body {
     background: #444;
     transform: scale(1.05);
 }
-
-/* =========================
-   FOG EFFECT (OPTIONAL 🔥)
-========================= */
 
 .fog {
     position: fixed;

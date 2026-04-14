@@ -33,6 +33,7 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IM+Fell+English+SC&display=swap"
         rel="stylesheet">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* Слой перехода */
         .page-transition-overlay {
@@ -57,11 +58,14 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
         }
 
         body {
-            background: url("../../pic/BgGener.jpg") no-repeat center center/cover;
+            background: url("../../pic/BgGener.jpg") no-repeat center center fixed;
+            background-size: cover;
             font-family: 'Cinzel', serif;
             color: white;
             margin: 0;
-            padding: 40px;
+            padding: 40px 20px;
+            /* Уменьшены отступы по бокам */
+            min-height: 100vh;
         }
 
         body::before {
@@ -77,24 +81,25 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
             justify-content: center;
             gap: 40px;
             flex-wrap: wrap;
+            max-width: 1200px;
+            /* Ограничение ширины для больших экранов */
+            margin: 0 auto;
         }
 
-        .card {
+        .card,
+        .js-panel {
             width: 500px;
+            max-width: 100%;
+            /* Чтобы карточки не вылезали за экран смартфона */
             background: rgba(20, 20, 20, 0.85);
             border: 1px solid #777;
             border-radius: 10px;
             padding: 30px;
-            text-align: center;
+            box-sizing: border-box;
+            /* Важно для корректного расчета ширины с padding */
         }
 
         .js-panel {
-            width: 500px;
-            background: rgba(20, 20, 20, 0.85);
-            border: 1px solid #777;
-            border-radius: 10px;
-            padding: 30px;
-
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -116,6 +121,7 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
         h1 {
             font-family: "IM Fell English SC", serif;
             letter-spacing: 3px;
+            font-size: 28px;
         }
 
         .section {
@@ -133,9 +139,9 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
         .backstory {
             font-style: italic;
             line-height: 1.6;
+            word-wrap: break-word;
+            /* Чтобы длинные слова не ломали верстку */
         }
-
-        /* BUTTON STYLE */
 
         .btn-generator-nav {
             display: block;
@@ -150,8 +156,10 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
             font-size: 18px;
             transition: 0.3s;
             cursor: pointer;
-
-            width: 260px;
+            width: 100%;
+            /* На мобильных кнопка на всю ширину */
+            max-width: 260px;
+            /* Но не больше 260px на десктопе */
         }
 
         .btn-generator-nav:hover {
@@ -166,10 +174,46 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['name'] != "") {
             min-height: 60px;
         }
 
-        /* bottom buttons */
+        /* АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
 
-        .bottom-buttons {
-            margin-top: 20px;
+            .container {
+                gap: 20px;
+            }
+
+            .card,
+            .js-panel {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .avatar {
+                width: 120px;
+                height: 120px;
+            }
+
+            .btn-generator-nav {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            /* Для совсем маленьких экранов убираем фиксированный фон, чтобы не тормозило */
+            body {
+                background-attachment: scroll;
+            }
         }
     </style>
 

@@ -7,10 +7,20 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 
 <body>
+    
+    <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+
+
 <div class="page-transition-overlay"></div>
 
  <!-- NAVIGATION -->
@@ -125,6 +135,29 @@
                 });
             });
         });
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+                const toggleBtn = document.querySelector('.mobile-menu-toggle');
+                const sideMenu = document.querySelector('.side-menu');
+
+                toggleBtn.addEventListener('click', () => {
+                    sideMenu.classList.toggle('active');
+
+                    // Анимация иконки бургера (опционально)
+                    const spans = toggleBtn.querySelectorAll('span');
+                    spans.forEach(span => span.classList.toggle('open'));
+                });
+
+                // Закрывать меню при клике на ссылку (важно для мобильных)
+                const menuLinks = document.querySelectorAll('.side-menu a');
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        sideMenu.classList.remove('active');
+                    });
+                });
+            });
     </script>
 </body>
 </html>

@@ -147,3 +147,85 @@ body {
         opacity: 0;
     }
 }
+
+
+/* Кнопка бургера (скрыта по умолчанию) */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 10000;
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid #555;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #ddd;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+/* Адаптивность для планшетов и телефонов */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+        /* Показываем кнопку */
+    }
+
+    .side-menu {
+        transform: translateX(-100%);
+        /* Прячем меню за экран */
+        transition: transform 0.4s ease;
+        width: 100%;
+        /* Меню на весь экран для удобства */
+        z-index: 9998;
+        background: rgba(10, 10, 10, 0.95);
+    }
+
+    .side-menu.active {
+        transform: translateX(0);
+        /* Показываем при клике */
+    }
+
+    .content {
+        position: relative;
+        right: 0;
+        top: 80px;
+        width: 90%;
+        margin: 0 auto;
+        font-size: 18px;
+        box-sizing: border-box;
+    }
+
+    /* Отключаем тяжелые эффекты на мобилках для производительности */
+    .cursor-glow,
+    .snow-particle,
+    .ice-spark {
+        display: none !important;
+    }
+
+    body {
+        background-attachment: scroll;
+        /* Фиксированный фон тормозит на iOS */
+    }
+}
+
+/* Для совсем маленьких экранов */
+@media (max-width: 480px) {
+    .content {
+        width: 95%;
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    .side-menu h2 {
+        font-size: 20px;
+    }
+}

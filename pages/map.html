@@ -8,200 +8,237 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English+SC&display=swap"
         rel="stylesheet">
 
-    <style>
-html {
-    scroll-behavior: smooth;
-}
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
 
-body {
-    margin: 0;
-    padding: 40px;
+    body {
+        margin: 0;
+        padding: 40px;
+        font-family: 'Cinzel', serif;
+        color: #e5e5e5;
+        background: url('../pic/dark_fog.jpg') no-repeat center/cover fixed;
+        display: flex;
+        justify-content: center;
+    }
 
-    font-family: 'Cinzel', serif;
-    color: #e5e5e5;
+    .content-split {
+        display: flex;
+        gap: 100px;
+        max-width: 1600px;
+        width: 100%;
+    }
 
-    background: url('../pic/dark_fog.jpg') no-repeat center/cover fixed;
+    .map-side {
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-    display: flex;
-    justify-content: center;
-}
+    .map-switch {
+        margin-bottom: 25px;
+        text-align: center;
+    }
 
-.content-split {
-    display: flex;
-    gap: 100px;
+    .map-switch button {
+        margin: 8px;
+        padding: 14px 35px;
+        font-size: 18px;
+        font-family: "IM Fell English SC", serif;
+        letter-spacing: 1px;
+        background: linear-gradient(to right, #3a3a3a, #5a5a5a);
+        color: #fff;
+        border: 1px solid #999;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
 
-    max-width: 1600px;
-    width: 100%;
-}
+    .map-switch button:hover {
+        transform: scale(1.1);
+        background: linear-gradient(to right, #555, #888);
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
+    }
 
+    .map-container {
+        width: 100%;
+        margin-top: 20px;
+        border-radius: 28px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(255, 255, 255, 0.05);
+    }
 
-.map-side {
-    width: 60%;
+    .map-container::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.08), transparent);
+        pointer-events: none;
+    }
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    .map-container img {
+        width: 100%;
+        display: block;
+        transition: transform 0.25s ease, opacity 0.4s;
+        /* На десктопе картинка чуть больше для эффекта параллакса */
+        transform: scale(1.1);
+    }
 
+    .info-side {
+        width: 50%;
+        padding: 30px 50px;
+        background: rgba(25, 25, 25, 0.55);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.05);
+        overflow-y: auto;
+    }
 
-.map-switch {
-    margin-bottom: 25px;
-    text-align: center;
-}
+    .info-text {
+        max-width: 600px;
+        line-height: 1.8;
+        font-size: 16px;
+    }
 
-.map-switch button {
-    margin: 8px;
-    padding: 14px 35px;
+    .info-text h2 {
+        font-size: 34px;
+        margin-bottom: 15px;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
 
-    font-size: 18px;
-    font-family: "IM Fell English SC", serif;
-    letter-spacing: 1px;
+    .info-text h3 {
+        margin-top: 25px;
+        margin-bottom: 10px;
+        color: #cfcfcf;
+    }
 
-    background: linear-gradient(to right, #3a3a3a, #5a5a5a);
-    color: #fff;
+    .info-text p {
+        margin-bottom: 10px;
+    }
 
-    border: 1px solid #999;
-    border-radius: 10px;
+    .scroll-animate {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s ease;
+    }
 
-    cursor: pointer;
+    .scroll-animate.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-    transition: 0.3s;
+    .back-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background: #2d2d2d;
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: 0.3s;
+        z-index: 100;
+    }
 
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
-}
+    .back-btn:hover {
+        background: #444;
+        transform: scale(1.05);
+    }
 
-.map-switch button:hover {
-    transform: scale(1.1);
+    .fog {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.05), transparent 60%);
+        animation: fogMove 20s infinite linear;
+        pointer-events: none;
+    }
 
-    background: linear-gradient(to right, #555, #888);
+    @keyframes fogMove {
+        0% {
+            transform: translateX(0);
+        }
 
-    box-shadow: 0 0 25px rgba(255,255,255,0.25);
-}
+        50% {
+            transform: translateX(40px);
+        }
 
-.map-container {
-    width: 100%;
-    margin-top: 20px;
+        100% {
+            transform: translateX(0);
+        }
+    }
 
-    border-radius: 28px;
-    overflow: hidden;
+    /* --- АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ И МОБИЛОК --- */
+    @media (max-width: 1024px) {
+        body {
+            padding: 20px;
+        }
 
-    position: relative;
+        .content-split {
+            flex-direction: column;
+            /* Ставим блоки друг под друга */
+            gap: 40px;
+            align-items: center;
+        }
 
-    box-shadow:
-        0 0 30px rgba(0,0,0,0.7),
-        inset 0 0 40px rgba(255,255,255,0.05);
-}
+        .map-side,
+        .info-side {
+            width: 100%;
+            /* Занимают всю ширину */
+            max-width: 100%;
+        }
 
-.map-container::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.08), transparent);
-    pointer-events: none;
-}
+        .info-side {
+            padding: 25px;
+            overflow-y: visible;
+            /* Отключаем внутренний скролл, скроллим всю страницу */
+        }
 
-.map-container img {
-    width: 100%;
-    display: block;
+        .map-switch button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
 
-    transition: transform 0.25s ease, opacity 0.4s;
-}
+        .map-container img {
+            transform: scale(1);
+            /* На мобилках параллакс может мешать, убираем дефолтный зум */
+        }
 
-.info-side {
-    width: 50%;
+        .info-text h2 {
+            font-size: 28px;
+            text-align: center;
+        }
 
-    padding: 30px 50px;
+        .back-btn {
+            padding: 10px 15px;
+            font-size: 14px;
+            right: 10px;
+            bottom: 10px;
+        }
+    }
 
-    background: rgba(25,25,25,0.55);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    @media (max-width: 480px) {
+        .map-switch {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
 
-    border-radius: 16px;
+        .map-switch button {
+            width: 100%;
+            margin: 5px 0;
+        }
 
-    border: 1px solid rgba(255,255,255,0.1);
-
-    box-shadow:
-        0 0 25px rgba(0,0,0,0.6),
-        inset 0 0 20px rgba(255,255,255,0.05);
-
-    overflow-y: auto;
-}
-
-
-
-.info-text {
-    max-width: 600px;
-    line-height: 1.8;
-    font-size: 16px;
-}
-
-.info-text h2 {
-    font-size: 34px;
-    margin-bottom: 15px;
-
-    text-shadow: 0 0 10px rgba(255,255,255,0.2);
-}
-
-.info-text h3 {
-    margin-top: 25px;
-    margin-bottom: 10px;
-    color: #cfcfcf;
-}
-
-.info-text p {
-    margin-bottom: 10px;
-}
-
-
-.scroll-animate {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s ease;
-}
-
-.scroll-animate.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.back-btn {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-
-    background: #2d2d2d;
-    color: #fff;
-
-    padding: 12px 20px;
-    border-radius: 8px;
-
-    text-decoration: none;
-
-    transition: 0.3s;
-}
-
-.back-btn:hover {
-    background: #444;
-    transform: scale(1.05);
-}
-
-.fog {
-    position: fixed;
-    inset: 0;
-
-    background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.05), transparent 60%);
-
-    animation: fogMove 20s infinite linear;
-
-    pointer-events: none;
-}
-
-@keyframes fogMove {
-    0% { transform: translateX(0); }
-    50% { transform: translateX(40px); }
-    100% { transform: translateX(0); }
-}
-    </style>
+        .info-text {
+            font-size: 15px;
+        }
+    }
+</style>
 </head>
 
 <body>

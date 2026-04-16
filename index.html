@@ -12,6 +12,11 @@
 </head>
 
 <body>
+    <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
     
 <div class="page-transition-overlay"></div>
 
@@ -94,32 +99,46 @@
 
     </script>
     <script>
+        // Логика интерфейса
         document.addEventListener("DOMContentLoaded", () => {
             const overlay = document.querySelector('.page-transition-overlay');
+            const toggleBtn = document.querySelector('.mobile-menu-toggle');
+            const sideMenu = document.querySelector('.side-menu');
 
-            // 1. При загрузке страницы плавно убираем оверлей
             if (overlay) {
-                // Небольшая задержка, чтобы браузер успел отрисовать начало анимации
                 setTimeout(() => {
                     overlay.classList.add('fade-out');
                 }, 100);
             }
 
-            // 2. Перехватываем клики по ссылкам для плавного ухода
-            const links = document.querySelectorAll('a');
+            if (toggleBtn && sideMenu) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    sideMenu.classList.toggle('active');
+                });
 
+                const menuLinks = document.querySelectorAll('.side-menu a');
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        sideMenu.classList.remove('active');
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!sideMenu.contains(e.target) && !toggleBtn.contains(e.target)) {
+                        sideMenu.classList.remove('active');
+                    }
+                });
+            }
+
+            const links = document.querySelectorAll('a');
             links.forEach(link => {
                 link.addEventListener('click', (e) => {
                     const href = link.getAttribute('href');
-
-                    // Проверяем, что ссылка ведет на другую страницу, а не является якорем (#) или внешней
                     if (href && !href.startsWith('#') && !link.target && href !== 'javascript:void(0);') {
-                        e.preventDefault(); // Останавливаем мгновенный переход
-
+                        e.preventDefault();
                         overlay.classList.remove('fade-out');
                         overlay.classList.add('fade-in');
-
-                        // Ждем окончания анимации (0.6s) и переходим
                         setTimeout(() => {
                             window.location.href = href;
                         }, 600);
@@ -127,29 +146,7 @@
                 });
             });
         });
-
-
-
-        document.addEventListener("DOMContentLoaded", () => {
-                const toggleBtn = document.querySelector('.mobile-menu-toggle');
-                const sideMenu = document.querySelector('.side-menu');
-
-                toggleBtn.addEventListener('click', () => {
-                    sideMenu.classList.toggle('active');
-
-                    // Анимация иконки бургера (опционально)
-                    const spans = toggleBtn.querySelectorAll('span');
-                    spans.forEach(span => span.classList.toggle('open'));
-                });
-
-                // Закрывать меню при клике на ссылку (важно для мобильных)
-                const menuLinks = document.querySelectorAll('.side-menu a');
-                menuLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        sideMenu.classList.remove('active');
-                    });
-                });
-            });
     </script>
-</body>
-</html>
+    </body>
+    
+    </html>

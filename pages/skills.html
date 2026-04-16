@@ -11,201 +11,248 @@
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="../style/skills.css">
 
-    <style>
-        /* Слой перехода */
-.page-transition-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000; 
-    z-index: 9999;
-    pointer-events: none; 
-    transition: opacity 0.6s ease-in-out;
-}
+<style>
+    /* Слой перехода */
+    .page-transition-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        z-index: 9999;
+        pointer-events: none;
+        transition: opacity 0.6s ease-in-out;
+    }
 
-.page-transition-overlay.fade-out {
-    opacity: 0;
-}
+    .page-transition-overlay.fade-out {
+        opacity: 0;
+    }
 
-.page-transition-overlay.fade-in {
-    opacity: 1;
-    pointer-events: all;
-}
+    .page-transition-overlay.fade-in {
+        opacity: 1;
+        pointer-events: all;
+    }
 
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Cinzel', serif;
+        background: url('../pic/skills/skillsBG.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #e5e5e5;
+        overflow-x: hidden;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Cinzel', serif;
-            background: url('../pic/skills/skillsBG.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #e5e5e5;
-            overflow-x: hidden;
-        }
+    /* ================= FOG ================= */
+    .background-fog {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(2px);
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        animation: fogFade 2s ease forwards;
+    }
 
-        /* ================= FOG ================= */
-
-        .background-fog {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(2px);
-    pointer-events: none;
-
-    z-index: 0;
-
-    opacity: 0;
-    animation: fogFade 2s ease forwards;
-}
-
-@keyframes fogFade {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-
-        @keyframes fogMove {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            100% {
-                background-position: 100% 50%;
-            }
-        }
-
-        
-
-        /* ================= CONTENT ================= */
-
-        .content {
-            margin-left: 300px;
-            padding: 40px;
-        position: relative;
-       z-index: 1;
+    @keyframes fogFade {
+        from {
             opacity: 0;
-            transform: translateY(40px);
-            transition: 1.2s ease;
         }
 
-        .content.visible {
+        to {
             opacity: 1;
-            transform: translateY(0);
         }
+    }
 
+    /* ================= CONTENT ================= */
+    .content {
+        margin-left: 300px;
+        padding: 40px;
+        position: relative;
+        z-index: 1;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: 1.2s ease;
+    }
+
+    .content.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 48px;
+        text-shadow: 0 0 15px black;
+    }
+
+    /* ================= GUILD LIST ================= */
+    .guild-list {
+        display: flex;
+        flex-direction: column;
+        gap: 90px;
+        align-items: center;
+        margin-top: 60px;
+    }
+
+    /* ================= ITEM ================= */
+    .guild-item {
+        display: flex;
+        align-items: center;
+        gap: 50px;
+        max-width: 900px;
+        width: 100%;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: 0.8s ease;
+    }
+
+    .guild-item.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* ================= IMAGE ================= */
+    .image-wrapper {
+        position: relative;
+        flex-shrink: 0;
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 0 25px black;
+        cursor: pointer;
+    }
+
+    .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.5s;
+    }
+
+    .image-wrapper:hover img {
+        filter: blur(4px) brightness(0.6);
+        transform: scale(1.05);
+    }
+
+    /* ================= TITLE OVER IMAGE ================= */
+    .overlay-title {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+        font-weight: 600;
+        opacity: 0;
+        transition: 0.4s;
+        text-shadow: 0 0 15px black;
+    }
+
+    .image-wrapper:hover .overlay-title {
+        opacity: 1;
+    }
+
+    /* ================= DESCRIPTION ================= */
+    .side-description {
+        flex-grow: 1;
+        max-width: 500px;
+        font-size: 18px;
+        line-height: 1.6;
+        opacity: 0;
+        transform: translateX(-20px);
+        transition: 0.5s ease;
+    }
+
+    .guild-item:hover .side-description {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    /* КНОПКА НАЗАД */
+    .back-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background: #2d2d2d;
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        text-decoration: none;
+        transition: 0.3s;
+        z-index: 100;
+    }
+
+    .back-btn:hover {
+        background: #444;
+        transform: scale(1.05);
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 1200px) {
+        .content {
+            margin-left: 0;
+            padding: 30px 20px;
+        }
+    }
+
+    @media (max-width: 900px) {
         h1 {
-            text-align: center;
-            font-size: 48px;
-            text-shadow: 0 0 15px black;
+            font-size: 36px;
         }
-
-        /* ================= GUILD LIST ================= */
 
         .guild-list {
-            display: flex;
-            flex-direction: column;
-            gap: 90px;
-            align-items: center;
-            margin-top: 60px;
+            gap: 60px;
         }
-
-        /* ================= ITEM ================= */
 
         .guild-item {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            max-width: 900px;
-
-            opacity: 0;
-            transform: translateY(40px);
-            transition: 0.8s ease;
+            flex-direction: column;
+            text-align: center;
+            gap: 25px;
         }
-
-        .guild-item.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ================= IMAGE ================= */
-
-        .image-wrapper {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 0 25px black;
-            cursor: pointer;
-        }
-
-        .image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.5s;
-        }
-
-        .image-wrapper:hover img {
-            filter: blur(4px) brightness(0.6);
-            transform: scale(1.05);
-        }
-
-        /* ================= TITLE OVER IMAGE ================= */
-
-        .overlay-title {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 28px;
-            font-weight: 600;
-            opacity: 0;
-            transition: 0.4s;
-            text-shadow: 0 0 15px black;
-        }
-
-        .image-wrapper:hover .overlay-title {
-            opacity: 1;
-        }
-
-        /* ================= DESCRIPTION ================= */
 
         .side-description {
-            max-width: 400px;
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: 0.5s ease;
-        }
-
-        .guild-item:hover .side-description {
             opacity: 1;
             transform: translateX(0);
+            max-width: 100%;
+            padding: 0 15px;
+            font-size: 17px;
         }
 
-        /* КНОПКА НАЗАД */
-.back-btn{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    background:#2d2d2d;
-    color:#fff;
-    padding:12px 20px;
-    border-radius:8px;
-    font-size:16px;
-    text-decoration:none;
-    transition:0.3s;
-    z-index:50;
-}
+        .image-wrapper {
+            width: 250px;
+            height: 250px;
+        }
 
-.back-btn:hover{
-    background:#444;
-    transform:scale(1.05);
-}
-    </style>
+        .overlay-title {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 28px;
+        }
+
+        .image-wrapper {
+            width: 200px;
+            height: 200px;
+        }
+
+        .back-btn {
+            right: 10px;
+            bottom: 10px;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+    }
+</style>
+
 </head>
 
 <body>
@@ -213,18 +260,12 @@
 
     <div class="background-fog"></div>
 
-
-    
-
-
-        <!-- CONTENT -->
         <div class="content">
             <h1>Guilds of Skyrim</h1>
 
             <div class="guild-list">
 
                 <!-- 1. Изменение -->
-                
                     <div class="guild-item">
                         <div class="image-wrapper">
                             <img src="../pic/skills/Alteration.webp" >
@@ -237,9 +278,7 @@
                         </div>
                     </div>
 
-
                 <!-- 2. Колдовство -->
-                
                     <div class="guild-item">
                         <div class="image-wrapper">
                             <img src="../pic/skills/Conjuration.webp" alt="Conjuration">
@@ -253,7 +292,6 @@
                     </div>
 
                 <!-- 3. Разрушение -->
-
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Destruction.webp" alt="Destruction">
@@ -265,8 +303,6 @@
                         easier to cast spells like Fireball, Ice Spike, and Lightning Bolt.
                     </div>
                 </div>
-
-                
 
                 <!-- 4.  Восстановление -->
                 <div class="guild-item">
@@ -281,7 +317,6 @@
                     </div>
                 </div>
 
-
                 <!-- 5. Иллюзия-->
                 <div class="guild-item">
                     <div class="image-wrapper">
@@ -294,7 +329,6 @@
                 Calm, and Invisibility.
                     </div>
                 </div>
-
                   
                 <!-- 6. Зачарование -->
                 <div class="guild-item">
@@ -308,9 +342,6 @@
                     </div>
                 </div>
 
-               
-
-              
                 <!-- 8. Блок -->
                 <div class="guild-item">
                     <div class="image-wrapper">
@@ -323,7 +354,6 @@
                 attacks.
                     </div>
                 </div>
-
               
                 <!-- 9. Лук -->
             <div class="guild-item">
@@ -336,9 +366,7 @@
             An archer is trained in the use of bows and arrows. The greater the skill, the deadlier the shot.
                 </div>
             </div>
-
                   
-
                 <!-- 10. Одноручка -->
                 <div class="guild-item">
                     <div class="image-wrapper">
@@ -351,9 +379,7 @@
                 deliver deadlier blows.
                     </div>
                 </div>
-
                    
-
                 <!-- 11. Двуручка -->
             <div class="guild-item">
                 <div class="image-wrapper">
@@ -366,7 +392,6 @@
             skill deliver deadlier blows.
                 </div>
             </div>
-
                   
                 <!-- 12. Тяжелая броня -->
                 <div class="guild-item">
@@ -379,7 +404,6 @@
                 Those trained to use Heavy Armor make more efficient use of Iron, Steel, Dwarven, Orcish, Ebony, and Daedric armors.
                     </div>
                 </div>
-
                   
                 <!-- 14. Кузнечное дело -->
                 <div class="guild-item">
@@ -416,7 +440,6 @@
                 The art of lockpicking is used to open locked doors and containers faster and with fewer broken lockpicks.
                     </div>
                 </div>
-
             
                 <!-- 16. Карманная кража -->
                 <div class="guild-item">
@@ -430,9 +453,7 @@
                 more likely to loot valuables.
                     </div>
                 </div>
-
             
-
                 <!-- 17. Скрытрность -->
                 <div class="guild-item">
                     <div class="image-wrapper">
@@ -445,8 +466,6 @@
                     </div>
                 </div>
                 
-                
-
                 <!-- 18. Красноречие -->
                 <div class="guild-item">
                     <div class="image-wrapper">
@@ -480,22 +499,19 @@
 
 <script>
     window.addEventListener("DOMContentLoaded", () => {
-        // Сразу показываем основной контейнер (шапку/фон)
         const content = document.querySelector('.content');
         if (content) content.classList.add('visible');
 
         const observerOptions = {
-            threshold: 0.1, // Сработает, когда 10% карточки покажется на экране
+            threshold: 0.1, 
             rootMargin: "0px 0px -50px 0px"
         };
 
         const guildObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Элемент входит в зону видимости — добавляем класс
                     entry.target.classList.add('show');
                 } else {
-                    // Элемент уходит из зоны видимости — удаляем класс (скролл в обе стороны)
                     entry.target.classList.remove('show');
                 }
             });
@@ -504,10 +520,8 @@
         const items = document.querySelectorAll('.guild-item');
 
         items.forEach((item) => {
-            // Настраиваем плавность анимации через JS (или можно оставить в CSS)
             item.style.transition = "all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)";
 
-            // Начинаем следить за элементом
             guildObserver.observe(item);
         });
     });
@@ -516,29 +530,21 @@
     document.addEventListener("DOMContentLoaded", () => {
         const overlay = document.querySelector('.page-transition-overlay');
 
-        // 1. При загрузке страницы плавно убираем оверлей
         if (overlay) {
-            // Небольшая задержка, чтобы браузер успел отрисовать начало анимации
             setTimeout(() => {
                 overlay.classList.add('fade-out');
             }, 100);
         }
-
-        // 2. Перехватываем клики по ссылкам для плавного ухода
         const links = document.querySelectorAll('a');
 
         links.forEach(link => {
             link.addEventListener('click', (e) => {
                 const href = link.getAttribute('href');
-
-                // Проверяем, что ссылка ведет на другую страницу, а не является якорем (#) или внешней
                 if (href && !href.startsWith('#') && !link.target && href !== 'javascript:void(0);') {
-                    e.preventDefault(); // Останавливаем мгновенный переход
+                    e.preventDefault(); 
 
                     overlay.classList.remove('fade-out');
                     overlay.classList.add('fade-in');
-
-                    // Ждем окончания анимации (0.6s) и переходим
                     setTimeout(() => {
                         window.location.href = href;
                     }, 600);

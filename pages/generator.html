@@ -105,7 +105,6 @@
             transform: scale(1.05);
         }
 
-        /* RIGHT PANEL */
             .right-panel {
                 width: 50%;
                 overflow-y: auto;
@@ -153,7 +152,6 @@
             border-color: #ccc;
         }
 
-        /* submit */
         .submit-btn {
             margin-top: 20px;
             width: 100%;
@@ -164,7 +162,6 @@
             cursor: pointer;
         }
 
-        /* animation */
         .form-box {
             transition: .4s;
         }
@@ -178,7 +175,6 @@
             width: 100%;
         }
 
-        /* sub options */
         .hidden {
             max-height: 0;
             overflow: hidden;
@@ -200,9 +196,67 @@
            font-size: 18px;
           letter-spacing: 1px;
           
-         
+        }
+
+        textarea {
+    width: 100%;
+    min-height: 100px;
+    background: rgba(50, 50, 50, 0.8);
+    border: 1px solid #888;
+    border-radius: 6px;
+    color: white;
+    padding: 10px;
+    font-family: 'Cinzel', serif;
+    margin-top: 5px;
+    resize: vertical; 
+} 
+/* Media Queries для мобильных устройств */
+@media (max-width: 900px) {
+    body {
+        overflow-y: auto; 
+        height: auto;
+    }
+
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left-panel, .right-panel {
+        width: 100%; 
+        border-right: none;
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    .left-panel {
+        border-bottom: 1px solid #777; 
+    }
+
+    .left-panel img {
+        width: 200px; 
+    }
+
+    .form-container {
+        width: 100%; 
+        max-width: 420px;
+    }
+
+    .right-panel {
+        overflow-y: visible; 
+        align-items: center;
+    }
 }
 
+@media (max-width: 480px) {
+    .left-panel h1 {
+        font-size: 28px;
+    }
+    
+    .left-panel button, .nav-btn, .submit-btn {
+        width: 100%;
+    }
+}
     </style>
 </head>
 

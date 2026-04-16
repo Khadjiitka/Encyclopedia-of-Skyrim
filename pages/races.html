@@ -11,211 +11,248 @@
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="../style/skills.css">
 
-    <style>
-        /* Слой перехода */
-.page-transition-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000; 
-    z-index: 9999;
-    pointer-events: none; 
-    transition: opacity 0.6s ease-in-out;
-}
+<style>
+    /* Слой перехода */
+    .page-transition-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        z-index: 9999;
+        pointer-events: none;
+        transition: opacity 0.6s ease-in-out;
+    }
 
-.page-transition-overlay.fade-out {
-    opacity: 0;
-}
+    .page-transition-overlay.fade-out {
+        opacity: 0;
+    }
 
-.page-transition-overlay.fade-in {
-    opacity: 1;
-    pointer-events: all;
-}
+    .page-transition-overlay.fade-in {
+        opacity: 1;
+        pointer-events: all;
+    }
 
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Cinzel', serif;
+        background: url('../pic/races/racesBG.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #e5e5e5;
+        overflow-x: hidden;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Cinzel', serif;
-            background: url('../pic/races/racesBG.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #e5e5e5;
-            overflow-x: hidden;
-        }
+    .background-fog {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(2px);
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        animation: fogFade 2s ease forwards;
+    }
 
-
-        .background-fog {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(2px);
-            pointer-events: none;
-
-            z-index: 0;
-
+    @keyframes fogFade {
+        from {
             opacity: 0;
-            animation: fogFade 2s ease forwards;
         }
 
-        @keyframes fogFade {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-
-        @keyframes fogMove {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            100% {
-                background-position: 100% 50%;
-            }
-        }
-
-
-        .content {
-            margin-left: 300px;
-            padding: 40px;
-            position: relative;
-            z-index: 1;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: 1.2s ease;
-        }
-
-        .content.visible {
+        to {
             opacity: 1;
-            transform: translateY(0);
         }
+    }
 
-        h1 {
-            text-align: center;
-            font-size: 48px;
-            text-shadow: 0 0 15px black;
+    .content {
+        margin-left: 300px;
+        /* Отступ для десктопного меню */
+        padding: 40px;
+        position: relative;
+        z-index: 1;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: 1.2s ease;
+    }
+
+    .content.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 48px;
+        text-shadow: 0 0 15px black;
+        margin-bottom: 20px;
+    }
+
+    .guild-list {
+        display: flex;
+        flex-direction: column;
+        gap: 90px;
+        align-items: center;
+        margin-top: 60px;
+    }
+
+    .guild-item {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        max-width: 1100px;
+        width: 100%;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .guild-item.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .image-wrapper {
+        flex-shrink: 0;
+        position: relative;
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0 0 25px black;
+        cursor: pointer;
+    }
+
+    .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.5s;
+    }
+
+    .image-wrapper:hover img {
+        filter: blur(4px) brightness(0.6);
+        transform: scale(1.05);
+    }
+
+    .overlay-title {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+        font-weight: 600;
+        opacity: 0;
+        transition: 0.4s;
+        text-shadow: 0 0 15px black;
+    }
+
+    .image-wrapper:hover .overlay-title {
+        opacity: 1;
+    }
+
+    .side-description {
+        flex-grow: 1;
+        font-size: 18px;
+        line-height: 1.6;
+        /* На десктопе описание появляется при ховере на весь айтем */
+        opacity: 0;
+        transform: translateX(-20px);
+        transition: 0.5s ease;
+    }
+
+    .guild-item:hover .side-description {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .back-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background: #2d2d2d;
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        text-decoration: none;
+        transition: 0.3s;
+        z-index: 100;
+    }
+
+    .back-btn:hover {
+        background: #444;
+        transform: scale(1.05);
+    }
+
+    /* --- АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ И ТЕЛЕФОНОВ --- */
+    @media (max-width: 1200px) {
+        .content {
+            margin-left: 0;
+            /* Убираем боковой отступ, так как меню на мобилках обычно скрыто или сверху */
+            padding: 20px;
         }
-
-
-        .guild-list {
-            display: flex;
-            flex-direction: column;
-            gap: 90px;
-            align-items: center;
-            margin-top: 60px;
-        }
-
 
         .guild-item {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            max-width: 1100px; 
-            width: 100%;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: 0.8s ease;
+            max-width: 800px;
+        }
+    }
+
+    @media (max-width: 850px) {
+        h1 {
+            font-size: 32px;
         }
 
-        .guild-item.show {
-            opacity: 1;
-            transform: translateY(0);
+        .guild-list {
+            gap: 60px;
         }
 
-
-        .image-wrapper {
-            flex-shrink: 0;
-            position: relative;
-            width: 300px;
-            height: 300px;
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 0 25px black;
-            cursor: pointer;
+        .guild-item {
+            flex-direction: column;
+            /* Картинка сверху, текст снизу */
+            text-align: center;
+            gap: 20px;
         }
-
-        .image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.5s;
-        }
-
-        .image-wrapper:hover img {
-            filter: blur(4px) brightness(0.6);
-            transform: scale(1.05);
-        }
-
-
-        .overlay-title {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 28px;
-            font-weight: 600;
-            opacity: 0;
-            transition: 0.4s;
-            text-shadow: 0 0 15px black;
-        }
-
-        .image-wrapper:hover .overlay-title {
-            opacity: 1;
-        }
-
 
         .side-description {
-            flex-grow: 1;
-            max-width: 100%; 
-            font-size: 18px;
-            line-height: 1.6;
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: 0.5s ease;
+            opacity: 1;
+            /* На тачскринах нет ховера, поэтому показываем текст сразу */
+            transform: translateX(0);
+            font-size: 16px;
+            padding: 0 10px;
         }
 
-        .guild-item:hover .side-description {
+        .image-wrapper {
+            width: 260px;
+            height: 260px;
+        }
+
+        /* Показываем имя расы поверх картинки всегда или через анимацию появления */
+        .overlay-title {
             opacity: 1;
-            transform: translateX(0);
+            background: rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .content {
+            padding: 15px;
+        }
+
+        .image-wrapper {
+            width: 200px;
+            height: 200px;
         }
 
         .back-btn {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            background: #2d2d2d;
-            color: #fff;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 16px;
-            text-decoration: none;
-            transition: 0.3s;
-            z-index: 50;
+            right: 10px;
+            bottom: 10px;
+            padding: 10px 15px;
+            font-size: 14px;
         }
-
-        .back-btn:hover {
-            background: #444;
-            transform: scale(1.05);
-        }
-
-        .guild-item {
-            opacity: 0;
-            transform: translateY(30px);
-           transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .guild-item.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    }
+</style>
 </head>
 
 <body>

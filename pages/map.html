@@ -245,7 +245,18 @@
 <div class="fog"></div>
     <div class="content-split">
 
-        <!-- LEFT -->
+
+
+
+        <audio id="bg-music" loop>
+            <source src="../secunda.mp3" type="audio/mpeg">
+        </audio>
+        <button id="music-toggle" class="music-control">♪</button>
+
+        
+
+
+        
         <div class="map-side">
 
             <div class="map-switch">
@@ -259,7 +270,6 @@
 
         </div>
 
-        <!-- RIGHT -->
         <div class="info-side">
             <div id="infoText" class="info-text scroll-animate">
 
@@ -401,6 +411,66 @@
         window.addEventListener('scroll', handleScroll);
         window.addEventListener('load', handleScroll);
 
+    </script>
+    <script>
+        const audio = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-toggle');
+
+        const syncMusic = () => {
+            const isPlaying = localStorage.getItem('musicPlaying') === 'true';
+            const savedTime = localStorage.getItem('musicTime');
+
+            if (savedTime) {
+                audio.currentTime = parseFloat(savedTime);
+            }
+
+            if (isPlaying) {
+                // Пытаемся включить
+                const playPromise = audio.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        musicBtn.classList.add('playing');
+                    }).catch(() => {
+                        console.log("Автоплей заблокирован. Ждем клика.");
+                        // Если заблокировано, включаем при первом клике по документу
+                        document.addEventListener('click', () => {
+                            if (localStorage.getItem('musicPlaying') === 'true' && audio.paused) {
+                                audio.play();
+                                musicBtn.classList.add('playing');
+                            }
+                        }, { once: true });
+                    });
+                }
+            }
+        };
+
+        // Сохраняем прогресс
+        setInterval(() => {
+            if (!audio.paused) {
+                localStorage.setItem('musicTime', audio.currentTime);
+            }
+        }, 1000);
+
+        // Логика кнопки
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Чтобы не срабатывал listener на document
+            if (audio.paused) {
+                audio.play();
+                musicBtn.classList.add('playing');
+                localStorage.setItem('musicPlaying', 'true');
+            } else {
+                audio.pause();
+                musicBtn.classList.remove('playing');
+                localStorage.setItem('musicPlaying', 'false');
+            }
+        });
+
+        window.addEventListener('load', syncMusic);
+
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem('musicTime', audio.currentTime);
+        });
     </script>
 
 </body>

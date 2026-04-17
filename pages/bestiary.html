@@ -8,7 +8,6 @@
 <link rel="style" href="../style/bestiary.css">
 
 <style>
-/* Слой перехода */
 .page-transition-overlay {
     position: fixed;
     top: 0;
@@ -30,7 +29,6 @@
     pointer-events: all;
 }
 
- /* GLOBAL */
 body {
     margin: 0;
     padding: 0;
@@ -51,7 +49,6 @@ body {
     z-index: -1;
 }
 
-/* CONTENT */
 .content {
     margin: 0 auto; 
     max-width: 1400px; 
@@ -63,13 +60,13 @@ body {
 
 h1 {
     text-align: center;
-    font-size: 56px; /* Чуть увеличили заголовок */
+    font-size: 56px; 
     margin-bottom: 50px;
     text-shadow: 0 0 15px black;
 }
 
 .category-section {
-    margin-bottom: 100px; /* Увеличили отступ между категориями (Драконы -> Животные) */
+    margin-bottom: 100px; 
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -78,12 +75,11 @@ h1 {
 
 h2.category-title {
     font-size: 38px;
-    margin-bottom: 40px; /* Увеличили отступ от заголовка до картинок */
+    margin-bottom: 40px; 
     text-shadow: 0 0 10px black;
     text-align: center;
 }
 
-/* CATEGORY LIST */
 .category-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -94,7 +90,6 @@ h2.category-title {
     max-width: 1250px;
 }
 
-/* CATEGORY ITEM  */
 .category-item {
     width: 100%; 
     height: 350px;
@@ -114,7 +109,6 @@ h2.category-title {
     transition: 0.6s;
 }
 
-/* Hover effect */
 .category-item:hover {
     transform: translateY(-10px) scale(1.03); /* Теперь карточка чуть «всплывает» */
     box-shadow: 0 15px 40px black;
@@ -125,15 +119,14 @@ h2.category-title {
     transform: scale(1.1);
 }
 
-/* LABEL */
 .category-info {
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: 20px 0; /* Увеличили плашку с текстом */
+    padding: 20px 0;
     background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
     color: #fff;
-    font-size: 18px; /* Текст стал крупнее */
+    font-size: 18px;
     text-align: center;
     opacity: 0;
     transform: translateY(20px);
@@ -145,7 +138,6 @@ h2.category-title {
     transform: translateY(0);
 }
 
-/* Кнопка */
 .back-btn {
     position: fixed;
     right: 30px;
@@ -166,7 +158,7 @@ h2.category-title {
     background: #eee;
     color: #111;
 }
-/* Поиск */
+
 .search-container {
     margin-bottom: 30px;
     width: 100%;
@@ -190,14 +182,14 @@ h2.category-title {
 }
 #monsterSearch:focus { border-color: #eee; box-shadow: 0 0 10px rgba(255,255,255,0.2); }
 
-/* Модальное окно */
+
 .modal {
     display: none;
     position: fixed;
     z-index: 1000;
     inset: 0;
     background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(15px); /* Усиленное размытие при открытии */
+    backdrop-filter: blur(15px);
     align-items: center;
     justify-content: center;
 }
@@ -217,7 +209,6 @@ h2.category-title {
 .close-modal:hover { color: white; }
 .modal-text h2 { font-size: 36px; margin-top: 0; }
 
-/* Адаптация модального окна */
 @media (max-width: 768px) {
     .modal-body {
         flex-direction: column;
@@ -236,6 +227,18 @@ h2.category-title {
 
 <body>
 <div class="page-transition-overlay"></div>
+
+
+
+
+<audio id="bg-music" loop>
+    <source src="../secunda.mp3" type="audio/mpeg">
+</audio>
+<button id="music-toggle" class="music-control">♪</button>
+
+
+
+
 
 <div class="content">
 <h1>Bestiary of Skyrim</h1>
@@ -437,7 +440,7 @@ h2.category-title {
         const term = e.target.value.toLowerCase();
         monsterss.forEach(monster => {
             const name = monster.querySelector('.category-info').innerText.toLowerCase();
-            // Если имя совпадает, показываем, если нет — скрываем
+            
             if (name.includes(term)) {
                 monster.style.display = "block";
             } else {
@@ -445,7 +448,6 @@ h2.category-title {
             }
         });
 
-        // Скрываем пустые заголовки категорий
         document.querySelectorAll('.category-section').forEach(section => {
             const hasVisible = Array.from(section.querySelectorAll('.category-item'))
                 .some(m => m.style.display !== "none");
@@ -454,12 +456,10 @@ h2.category-title {
     });
 
     // ---  МОДАЛЬНЫЕ ОКНА ---
-    // 1. Сначала объявляем переменные элементов
         const modal = document.getElementById('monsterModal');
         const closeModal = document.querySelector('.close-modal');
-        const monsters = document.querySelectorAll('.category-item'); // Добавили эту строку!
+        const monsters = document.querySelectorAll('.category-item');
 
-        // 2. База данных существ
         const monsterStats = {
             "Ancient Dragon": {
                 hp: "3071", weak: "Dragonrend", loot: "Dragon Scales, Bone",
@@ -591,13 +591,11 @@ h2.category-title {
             }
         };
 
-        // 3. Логика открытия окна
         monsters.forEach(monster => {
             monster.onclick = function () {
                 const name = this.querySelector('.category-info').innerText;
                 const imgPath = this.querySelector('img').src;
 
-                // Находим данные в базе
                 const stats = monsterStats[name] || {
                     hp: "???",
                     weak: "Unknown",
@@ -605,25 +603,21 @@ h2.category-title {
                     desc: "Information about this creature is lost in the scrolls of time."
                 };
 
-                // Заполняем модальное окно данными
                 document.getElementById('modalName').innerText = name;
                 document.getElementById('modalImg').src = imgPath;
                 document.getElementById('modalHP').innerText = stats.hp;
                 document.getElementById('modalWeak').innerText = stats.weak;
                 document.getElementById('modalLoot').innerText = stats.loot;
 
-                // ВАЖНО: Находим описание и обновляем его ТОЛЬКО ЗДЕСЬ
                 const descElement = document.querySelector('.modal-desc');
                 if (descElement) {
                     descElement.innerText = stats.desc;
                 }
 
-                // Показываем окно
                 modal.style.display = "flex";
             }
         });
 
-        // 4. Закрытие окна
         closeModal.onclick = () => { modal.style.display = "none"; };
 
         window.onclick = (e) => {
@@ -631,34 +625,29 @@ h2.category-title {
                 modal.style.display = "none";
             }
         };
-    // --- SCROLL REVEAL (ПЛАВНОЕ ПОЯВЛЕНИЕ) ---
         const observerOptions = {
-            threshold: 0.1, // Элемент начнет анимироваться, когда 10% его площади появится в кадре
-            rootMargin: "0px 0px -50px 0px" // Небольшой отступ снизу для более естественного эффекта
+            threshold: 0.1, 
+            rootMargin: "0px 0px -50px 0px" 
         };
 
         const scrollObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Когда элемент входит в область видимости
                     entry.target.style.opacity = "1";
                     entry.target.style.transform = "translateY(0)";
                 } else {
-                    // Когда элемент уходит (скроллим вверх или далеко вниз)
                     entry.target.style.opacity = "0";
                     entry.target.style.transform = "translateY(50px)";
                 }
             });
         }, observerOptions);
 
-        // Применяем ко всем карточкам монстров и заголовкам категорий
         const elementsToAnimate = document.querySelectorAll('.category-item, .category-title, h1');
 
         elementsToAnimate.forEach(el => {
-            // Начальное состояние
             el.style.opacity = "0";
             el.style.transform = "translateY(50px)";
-            el.style.transition = "all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1)"; // Плавный "вылет"
+            el.style.transition = "all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1)"; 
 
             scrollObserver.observe(el);
         });
@@ -667,35 +656,91 @@ h2.category-title {
     document.addEventListener("DOMContentLoaded", () => {
         const overlay = document.querySelector('.page-transition-overlay');
 
-        // 1. При загрузке страницы плавно убираем оверлей
+        
         if (overlay) {
-            // Небольшая задержка, чтобы браузер успел отрисовать начало анимации
             setTimeout(() => {
                 overlay.classList.add('fade-out');
             }, 100);
         }
 
-        // 2. Перехватываем клики по ссылкам для плавного ухода
         const links = document.querySelectorAll('a');
 
         links.forEach(link => {
             link.addEventListener('click', (e) => {
                 const href = link.getAttribute('href');
 
-                // Проверяем, что ссылка ведет на другую страницу, а не является якорем (#) или внешней
                 if (href && !href.startsWith('#') && !link.target && href !== 'javascript:void(0);') {
-                    e.preventDefault(); // Останавливаем мгновенный переход
+                    e.preventDefault(); 
 
                     overlay.classList.remove('fade-out');
                     overlay.classList.add('fade-in');
 
-                    // Ждем окончания анимации (0.6s) и переходим
                     setTimeout(() => {
                         window.location.href = href;
                     }, 600);
                 }
             });
         });
+    });
+</script>
+<script>
+    const audio = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-toggle');
+
+    const syncMusic = () => {
+        const isPlaying = localStorage.getItem('musicPlaying') === 'true';
+        const savedTime = localStorage.getItem('musicTime');
+
+        if (savedTime) {
+            audio.currentTime = parseFloat(savedTime);
+        }
+
+        if (isPlaying) {
+            // Пытаемся включить
+            const playPromise = audio.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    musicBtn.classList.add('playing');
+                }).catch(() => {
+                    console.log("Автоплей заблокирован. Ждем клика.");
+                    // Если заблокировано, включаем при первом клике по документу
+                    document.addEventListener('click', () => {
+                        if (localStorage.getItem('musicPlaying') === 'true' && audio.paused) {
+                            audio.play();
+                            musicBtn.classList.add('playing');
+                        }
+                    }, { once: true });
+                });
+            }
+        }
+    };
+
+    // Сохраняем прогресс
+    setInterval(() => {
+        if (!audio.paused) {
+            localStorage.setItem('musicTime', audio.currentTime);
+        }
+    }, 1000);
+
+    // Логика кнопки
+    musicBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Чтобы не срабатывал listener на document
+        if (audio.paused) {
+            audio.play();
+            musicBtn.classList.add('playing');
+            localStorage.setItem('musicPlaying', 'true');
+        } else {
+            audio.pause();
+            musicBtn.classList.remove('playing');
+            localStorage.setItem('musicPlaying', 'false');
+        }
+    });
+
+    window.addEventListener('load', syncMusic);
+
+    window.addEventListener('beforeunload', () => {
+        localStorage.setItem('musicTime', audio.currentTime);
     });
 </script>
 </body>

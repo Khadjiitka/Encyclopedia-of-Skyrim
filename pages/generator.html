@@ -263,6 +263,18 @@
 <body>
 <div class="page-transition-overlay"></div>
 
+
+
+
+<audio id="bg-music" loop>
+    <source src="../secunda.mp3" type="audio/mpeg">
+</audio>
+<button id="music-toggle" class="music-control">♪</button>
+
+
+
+
+
     <div class="container">
 
         <!-- LEFT -->
@@ -677,35 +689,90 @@
     document.addEventListener("DOMContentLoaded", () => {
         const overlay = document.querySelector('.page-transition-overlay');
 
-        // 1. При загрузке страницы плавно убираем оверлей
         if (overlay) {
-            // Небольшая задержка, чтобы браузер успел отрисовать начало анимации
             setTimeout(() => {
                 overlay.classList.add('fade-out');
             }, 100);
         }
 
-        // 2. Перехватываем клики по ссылкам для плавного ухода
         const links = document.querySelectorAll('a');
 
         links.forEach(link => {
             link.addEventListener('click', (e) => {
                 const href = link.getAttribute('href');
 
-                // Проверяем, что ссылка ведет на другую страницу, а не является якорем (#) или внешней
                 if (href && !href.startsWith('#') && !link.target && href !== 'javascript:void(0);') {
-                    e.preventDefault(); // Останавливаем мгновенный переход
+                    e.preventDefault(); 
 
                     overlay.classList.remove('fade-out');
                     overlay.classList.add('fade-in');
 
-                    // Ждем окончания анимации (0.6s) и переходим
                     setTimeout(() => {
                         window.location.href = href;
                     }, 600);
                 }
             });
         });
+    });
+</script>
+<script>
+    const audio = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-toggle');
+
+    const syncMusic = () => {
+        const isPlaying = localStorage.getItem('musicPlaying') === 'true';
+        const savedTime = localStorage.getItem('musicTime');
+
+        if (savedTime) {
+            audio.currentTime = parseFloat(savedTime);
+        }
+
+        if (isPlaying) {
+            // Пытаемся включить
+            const playPromise = audio.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    musicBtn.classList.add('playing');
+                }).catch(() => {
+                    console.log("Автоплей заблокирован. Ждем клика.");
+                    // Если заблокировано, включаем при первом клике по документу
+                    document.addEventListener('click', () => {
+                        if (localStorage.getItem('musicPlaying') === 'true' && audio.paused) {
+                            audio.play();
+                            musicBtn.classList.add('playing');
+                        }
+                    }, { once: true });
+                });
+            }
+        }
+    };
+
+    // Сохраняем прогресс
+    setInterval(() => {
+        if (!audio.paused) {
+            localStorage.setItem('musicTime', audio.currentTime);
+        }
+    }, 1000);
+
+    // Логика кнопки
+    musicBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Чтобы не срабатывал listener на document
+        if (audio.paused) {
+            audio.play();
+            musicBtn.classList.add('playing');
+            localStorage.setItem('musicPlaying', 'true');
+        } else {
+            audio.pause();
+            musicBtn.classList.remove('playing');
+            localStorage.setItem('musicPlaying', 'false');
+        }
+    });
+
+    window.addEventListener('load', syncMusic);
+
+    window.addEventListener('beforeunload', () => {
+        localStorage.setItem('musicTime', audio.currentTime);
     });
 </script>
 </body>

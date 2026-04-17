@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        /* Слой перехода */
         .page-transition-overlay {
             position: fixed;
             top: 0;
@@ -57,14 +56,12 @@
     
         h1 {
             text-align: center;
-            /* Адаптивный шрифт: минимум 32px, максимум 56px */
             font-size: clamp(32px, 8vw, 56px);
             margin-bottom: 30px;
             text-shadow: 0 0 20px black;
             color: #fff;
         }
     
-        /* Поиск */
         .search-container {
             display: flex;
             justify-content: center;
@@ -86,16 +83,13 @@
             border-radius: 5px;
         }
     
-        /* Список гильдий: используем Grid для адаптивности */
         .guild-list {
             display: grid;
             grid-template-columns: 1fr;
-            /* По умолчанию в одну колонку */
             gap: 25px;
             padding-bottom: 100px;
         }
     
-        /* На планшетах и ПК делаем 2 колонки */
         @media (min-width: 768px) {
             .guild-list {
                 grid-template-columns: 1fr 1fr;
@@ -106,7 +100,6 @@
             position: relative;
             width: 100%;
             height: 280px;
-            /* Немного увеличил высоту для мобилок */
             border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
@@ -158,8 +151,7 @@
             font-size: 14px;
             line-height: 1.4;
         }
-    
-        /* МОДАЛЬНОЕ ОКНО */
+
         .modal {
             display: none;
             position: fixed;
@@ -197,7 +189,6 @@
             margin-bottom: 20px;
         }
     
-        /* Галерея в модалке */
         .modal-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -241,7 +232,6 @@
             border: 1px solid #444;
         }
     
-        /* На маленьких мобилках кнопку "Назад" можно сделать шире */
         @media (max-width: 480px) {
             .back-btn {
                 right: 10px;
@@ -255,6 +245,19 @@
 <body>
     <div class="page-transition-overlay"></div>
 
+
+    <audio id="bg-music" loop>
+        <source src="../secunda.mp3" type="audio/mpeg">
+    </audio>
+    <button id="music-toggle" class="music-control">♪</button>
+
+
+
+
+
+
+
+    
     <div class="background-fog"></div>
     <div class="content">
         <h1>Guilds of Skyrim</h1>
@@ -412,7 +415,6 @@
         const modal = document.getElementById('guildModal');
         const modalBody = document.getElementById('modalBody');
 
-        // --- 1. ПЛАВНОЕ ПОЯВЛЕНИЕ (ОБСЕРВЕР) ---
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -423,13 +425,11 @@
             });
         }, { threshold: 0.1 });
 
-        // Функция для запуска наблюдения за всеми карточками
         function initObserver() {
             const items = document.querySelectorAll('.guild-item');
             items.forEach(item => revealObserver.observe(item));
         }
 
-        // --- 2. РЕНДЕР СПИСКА ---
         function renderGuilds(filter = "") {
             guildList.innerHTML = "";
             Object.keys(guildData).forEach(name => {
@@ -449,11 +449,9 @@
                 }
             });
 
-            // КРИТИЧНО: Запускаем обсервер СРАЗУ после создания карточек
             initObserver();
         }
 
-        // --- 3. МОДАЛКА ---
         function openModal(name) {
                 const data = guildData[name];
                 let galleryHTML = data.gallery.map(item => `
@@ -471,8 +469,6 @@
                 document.body.style.overflow = "hidden";
             }
 
-        // --- 4. СОБЫТИЯ ---
-        // Используем только один инпут 
         document.querySelectorAll('#guildSearch').forEach(input => {
             input.oninput = (e) => renderGuilds(e.target.value);
         });
@@ -488,8 +484,6 @@
                 document.body.style.overflow = "auto";
             }
         };
-
-        // ПЕРВЫЙ ЗАПУСК
         renderGuilds();
     </script>
 
@@ -504,7 +498,6 @@
 
                 if (title.includes(filter) || description.includes(filter)) {
                     item.style.display = "block";
-                    // Чтобы при поиске элементы сразу появлялись (если они в зоне видимости)
                     item.classList.add('visible');
                 } else {
                     item.style.display = "none";
@@ -516,35 +509,90 @@
         document.addEventListener("DOMContentLoaded", () => {
             const overlay = document.querySelector('.page-transition-overlay');
 
-            // 1. При загрузке страницы плавно убираем оверлей
             if (overlay) {
-                // Небольшая задержка, чтобы браузер успел отрисовать начало анимации
                 setTimeout(() => {
                     overlay.classList.add('fade-out');
                 }, 100);
             }
 
-            // 2. Перехватываем клики по ссылкам для плавного ухода
             const links = document.querySelectorAll('a');
 
             links.forEach(link => {
                 link.addEventListener('click', (e) => {
                     const href = link.getAttribute('href');
 
-                    // Проверяем, что ссылка ведет на другую страницу, а не является якорем (#) или внешней
                     if (href && !href.startsWith('#') && !link.target && href !== 'javascript:void(0);') {
-                        e.preventDefault(); // Останавливаем мгновенный переход
+                        e.preventDefault(); 
 
                         overlay.classList.remove('fade-out');
                         overlay.classList.add('fade-in');
 
-                        // Ждем окончания анимации (0.6s) и переходим
                         setTimeout(() => {
                             window.location.href = href;
                         }, 600);
                     }
                 });
             });
+        });
+    </script>
+    <script>
+        const audio = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-toggle');
+
+        const syncMusic = () => {
+            const isPlaying = localStorage.getItem('musicPlaying') === 'true';
+            const savedTime = localStorage.getItem('musicTime');
+
+            if (savedTime) {
+                audio.currentTime = parseFloat(savedTime);
+            }
+
+            if (isPlaying) {
+                // Пытаемся включить
+                const playPromise = audio.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        musicBtn.classList.add('playing');
+                    }).catch(() => {
+                        console.log("Автоплей заблокирован. Ждем клика.");
+                        // Если заблокировано, включаем при первом клике по документу
+                        document.addEventListener('click', () => {
+                            if (localStorage.getItem('musicPlaying') === 'true' && audio.paused) {
+                                audio.play();
+                                musicBtn.classList.add('playing');
+                            }
+                        }, { once: true });
+                    });
+                }
+            }
+        };
+
+        // Сохраняем прогресс
+        setInterval(() => {
+            if (!audio.paused) {
+                localStorage.setItem('musicTime', audio.currentTime);
+            }
+        }, 1000);
+
+        // Логика кнопки
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Чтобы не срабатывал listener на document
+            if (audio.paused) {
+                audio.play();
+                musicBtn.classList.add('playing');
+                localStorage.setItem('musicPlaying', 'true');
+            } else {
+                audio.pause();
+                musicBtn.classList.remove('playing');
+                localStorage.setItem('musicPlaying', 'false');
+            }
+        });
+
+        window.addEventListener('load', syncMusic);
+
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem('musicTime', audio.currentTime);
         });
     </script>
 </body>

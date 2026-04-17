@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="../style/skills.css">
 
 <style>
-    /* Слой перехода */
     .page-transition-overlay {
         position: fixed;
         top: 0;
@@ -67,7 +66,6 @@
 
     .content {
         margin-left: 300px;
-        /* Отступ для десктопного меню */
         padding: 40px;
         position: relative;
         z-index: 1;
@@ -156,7 +154,6 @@
         flex-grow: 1;
         font-size: 18px;
         line-height: 1.6;
-        /* На десктопе описание появляется при ховере на весь айтем */
         opacity: 0;
         transform: translateX(-20px);
         transition: 0.5s ease;
@@ -186,72 +183,73 @@
         transform: scale(1.05);
     }
 
-    /* --- АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ И ТЕЛЕФОНОВ --- */
+
     @media (max-width: 1200px) {
+
         .content {
+
             margin-left: 0;
-            /* Убираем боковой отступ, так как меню на мобилках обычно скрыто или сверху */
+
             padding: 20px;
+
         }
 
         .guild-item {
+
             max-width: 800px;
+
         }
+
     }
 
-    @media (max-width: 850px) {
-        h1 {
-            font-size: 32px;
-        }
-
-        .guild-list {
-            gap: 60px;
-        }
-
-        .guild-item {
-            flex-direction: column;
-            /* Картинка сверху, текст снизу */
-            text-align: center;
-            gap: 20px;
-        }
-
-        .side-description {
-            opacity: 1;
-            /* На тачскринах нет ховера, поэтому показываем текст сразу */
-            transform: translateX(0);
-            font-size: 16px;
-            padding: 0 10px;
-        }
-
-        .image-wrapper {
-            width: 260px;
-            height: 260px;
-        }
-
-        /* Показываем имя расы поверх картинки всегда или через анимацию появления */
-        .overlay-title {
-            opacity: 1;
-            background: rgba(0, 0, 0, 0.3);
-        }
+@media (max-width: 850px) {
+    h1 {
+        font-size: 32px;
     }
 
-    @media (max-width: 480px) {
-        .content {
-            padding: 15px;
-        }
-
-        .image-wrapper {
-            width: 200px;
-            height: 200px;
-        }
-
-        .back-btn {
-            right: 10px;
-            bottom: 10px;
-            padding: 10px 15px;
-            font-size: 14px;
-        }
+    .guild-list {
+        gap: 60px;
     }
+
+    .guild-item {
+        flex-direction: column; 
+        text-align: center;
+        gap: 20px;
+        opacity: 0; 
+    }
+
+    .side-description {
+        opacity: 1 !important; 
+        transform: translateX(0) !important;
+        font-size: 16px;
+        padding: 0 15px;
+        color: #e5e5e5;
+    }
+
+    .image-wrapper {
+        width: 280px;
+        height: 280px;
+    }
+
+    .overlay-title {
+        opacity: 1 !important;
+        background: rgba(0, 0, 0, 0.4);
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .image-wrapper {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .side-description {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+}
+     
 </style>
 </head>
 
@@ -260,11 +258,6 @@
 
     <div class="background-fog"></div>
 
-
-
-
-
-    <!-- CONTENT -->
     <div class="content">
         <h1>Races of Skyrim</h1>
 
@@ -448,11 +441,9 @@
 
  <script>
     window.addEventListener("DOMContentLoaded", () => {
-        // 1. Сразу показываем основной контейнер
         const content = document.querySelector('.content');
         if (content) content.classList.add('visible');
 
-        // 2. Настраиваем обсервер для элементов гильдий
         const observerOptions = {
             threshold: 0.1,
             rootMargin: "0px 0px -50px 0px"
@@ -461,19 +452,15 @@
         const guildObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Добавляем класс при появлении в кадре
                     entry.target.classList.add('show');
                 } else {
-                    // УДАЛЯЕМ класс при уходе из кадра (для работы в обе стороны)
                     entry.target.classList.remove('show');
                 }
             });
         }, observerOptions);
 
-        // 3. Запускаем наблюдение за каждой гильдией
         const items = document.querySelectorAll('.guild-item');
         items.forEach(item => {
-            // Убеждаемся, что начальные стили заданы (опционально через JS или CSS)
             item.style.transition = "all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)";
             guildObserver.observe(item);
         });
@@ -483,29 +470,24 @@
     document.addEventListener("DOMContentLoaded", () => {
         const overlay = document.querySelector('.page-transition-overlay');
 
-        // 1. При загрузке страницы плавно убираем оверлей
         if (overlay) {
-            // Небольшая задержка, чтобы браузер успел отрисовать начало анимации
             setTimeout(() => {
                 overlay.classList.add('fade-out');
             }, 100);
         }
 
-        // 2. Перехватываем клики по ссылкам для плавного ухода
         const links = document.querySelectorAll('a');
 
         links.forEach(link => {
             link.addEventListener('click', (e) => {
                 const href = link.getAttribute('href');
 
-                // Проверяем, что ссылка ведет на другую страницу, а не является якорем (#) или внешней
                 if (href && !href.startsWith('#') && !link.target && href !== 'javascript:void(0);') {
-                    e.preventDefault(); // Останавливаем мгновенный переход
+                    e.preventDefault(); 
 
                     overlay.classList.remove('fade-out');
                     overlay.classList.add('fade-in');
 
-                    // Ждем окончания анимации (0.6s) и переходим
                     setTimeout(() => {
                         window.location.href = href;
                     }, 600);

@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="../style/skills.css">
 
 <style>
-    /* Слой перехода */
     .page-transition-overlay {
         position: fixed;
         top: 0;
@@ -44,7 +43,6 @@
         overflow-x: hidden;
     }
 
-    /* ================= FOG ================= */
     .background-fog {
         position: fixed;
         inset: 0;
@@ -66,7 +64,6 @@
         }
     }
 
-    /* ================= CONTENT ================= */
     .content {
         margin-left: 300px;
         padding: 40px;
@@ -88,7 +85,6 @@
         text-shadow: 0 0 15px black;
     }
 
-    /* ================= GUILD LIST ================= */
     .guild-list {
         display: flex;
         flex-direction: column;
@@ -97,7 +93,6 @@
         margin-top: 60px;
     }
 
-    /* ================= ITEM ================= */
     .guild-item {
         display: flex;
         align-items: center;
@@ -114,7 +109,6 @@
         transform: translateY(0);
     }
 
-    /* ================= IMAGE ================= */
     .image-wrapper {
         position: relative;
         flex-shrink: 0;
@@ -138,7 +132,6 @@
         transform: scale(1.05);
     }
 
-    /* ================= TITLE OVER IMAGE ================= */
     .overlay-title {
         position: absolute;
         inset: 0;
@@ -156,7 +149,6 @@
         opacity: 1;
     }
 
-    /* ================= DESCRIPTION ================= */
     .side-description {
         flex-grow: 1;
         max-width: 500px;
@@ -172,7 +164,6 @@
         transform: translateX(0);
     }
 
-    /* КНОПКА НАЗАД */
     .back-btn {
         position: fixed;
         right: 20px;
@@ -192,7 +183,6 @@
         transform: scale(1.05);
     }
 
-    /* ================= RESPONSIVE ================= */
     @media (max-width: 1200px) {
         .content {
             margin-left: 0;
@@ -206,51 +196,60 @@
         }
 
         .guild-list {
-            gap: 60px;
+            gap: 40px; /* Уменьшаем отступ между навыками на мобилках */
         }
 
         .guild-item {
-            flex-direction: column;
-            text-align: center;
-            gap: 25px;
+            flex-direction: row; /* Оставляем картинку и текст в одну линию */
+            align-items: flex-start; /* Выравнивание по верху */
+            gap: 20px;
+            text-align: left;
         }
 
+        /* Делаем описание видимым сразу без ховера */
         .side-description {
-            opacity: 1;
-            transform: translateX(0);
+            opacity: 1 !important;
+            transform: translateX(0) !important;
             max-width: 100%;
-            padding: 0 15px;
-            font-size: 17px;
+            padding: 0;
+            font-size: 15px; /* Немного уменьшаем шрифт для экономии места */
+            line-height: 1.4;
         }
 
+        /* Уменьшаем размер картинки, чтобы текст влез рядом */
         .image-wrapper {
-            width: 250px;
-            height: 250px;
+            width: 120px;
+            height: 120px;
+            flex-shrink: 0; /* Чтобы картинка не сжималась */
         }
 
+        /* Показываем название навыка на картинке сразу */
         .overlay-title {
-            opacity: 1;
-            background: rgba(0, 0, 0, 0.2);
+            opacity: 1 !important;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.4);
         }
     }
 
     @media (max-width: 480px) {
-        h1 {
-            font-size: 28px;
+        .guild-item {
+            gap: 15px;
         }
 
         .image-wrapper {
-            width: 200px;
-            height: 200px;
+            width: 90px; /* Еще меньше для совсем маленьких экранов */
+            height: 90px;
         }
 
-        .back-btn {
-            right: 10px;
-            bottom: 10px;
-            padding: 10px 15px;
-            font-size: 14px;
+        .side-description {
+            font-size: 13px;
+        }
+
+        .overlay-title {
+            font-size: 12px;
         }
     }
+    
 </style>
 
 </head>
@@ -265,7 +264,6 @@
 
             <div class="guild-list">
 
-                <!-- 1. Изменение -->
                     <div class="guild-item">
                         <div class="image-wrapper">
                             <img src="../pic/skills/Alteration.webp" >
@@ -278,7 +276,6 @@
                         </div>
                     </div>
 
-                <!-- 2. Колдовство -->
                     <div class="guild-item">
                         <div class="image-wrapper">
                             <img src="../pic/skills/Conjuration.webp" alt="Conjuration">
@@ -291,7 +288,6 @@
                         </div>
                     </div>
 
-                <!-- 3. Разрушение -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Destruction.webp" alt="Destruction">
@@ -304,7 +300,6 @@
                     </div>
                 </div>
 
-                <!-- 4.  Восстановление -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Restoration.webp" alt="Restoration">
@@ -317,7 +312,6 @@
                     </div>
                 </div>
 
-                <!-- 5. Иллюзия-->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Illusion.webp" alt="Illusion">
@@ -330,7 +324,6 @@
                     </div>
                 </div>
                   
-                <!-- 6. Зачарование -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Enchanting.webp" alt="Enchanting">
@@ -342,7 +335,6 @@
                     </div>
                 </div>
 
-                <!-- 8. Блок -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Block.webp" alt="Block">
@@ -355,7 +347,6 @@
                     </div>
                 </div>
               
-                <!-- 9. Лук -->
             <div class="guild-item">
                 <div class="image-wrapper">
                     <img src="../pic/skills/Archer.webp" alt="Archery">
@@ -367,7 +358,6 @@
                 </div>
             </div>
                   
-                <!-- 10. Одноручка -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/One-handed.webp" alt="One-handed">
@@ -380,7 +370,6 @@
                     </div>
                 </div>
                    
-                <!-- 11. Двуручка -->
             <div class="guild-item">
                 <div class="image-wrapper">
                     <img src="../pic/skills/Two-handed.webp" alt="Two-handed">
@@ -393,7 +382,6 @@
                 </div>
             </div>
                   
-                <!-- 12. Тяжелая броня -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Heavy_Armor.webp" alt="Heavy Armor">
@@ -405,7 +393,6 @@
                     </div>
                 </div>
                   
-                <!-- 14. Кузнечное дело -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Smithing.webp" alt="Smithing">
@@ -417,7 +404,6 @@
                     </div>
                 </div>
 
-                <!-- 13. Легкая броня -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Light_Armor.webp" alt="Light Armor">
@@ -429,7 +415,6 @@
                     </div>
                 </div>
 
-                <!-- 15. Взлом -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Lockpicking.webp" alt="Lockpicking">
@@ -441,7 +426,6 @@
                     </div>
                 </div>
             
-                <!-- 16. Карманная кража -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Pickpocket.webp" alt="Pickpocket">
@@ -454,7 +438,6 @@
                     </div>
                 </div>
             
-                <!-- 17. Скрытрность -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Sneak.webp" alt="Sneakr">
@@ -466,7 +449,6 @@
                     </div>
                 </div>
                 
-                <!-- 18. Красноречие -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Speechcraft.webp" alt="Speech">
@@ -478,7 +460,6 @@
                     </div>
                 </div>
 
-                <!-- 9. Алхимия -->
                 <div class="guild-item">
                     <div class="image-wrapper">
                         <img src="../pic/skills/Alchemy.webp" alt="Alchemy">

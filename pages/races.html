@@ -182,7 +182,64 @@
         background: #444;
         transform: scale(1.05);
     }
+/* Кнопка музыки в левом верхнем углу */
+.music-control {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    z-index: 10001;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
 
+.music-control:hover {
+    border-color: rgba(180, 220, 255, 0.6);
+    transform: scale(1.1);
+    text-shadow: 0 0 10px #fff;
+}
+
+/* Эффект, когда музыка ИГРАЕТ */
+.music-control.playing {
+    border-color: rgba(0, 200, 255, 0.8);
+    color: #00d2ff;
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.4), inset 0 0 10px rgba(0, 210, 255, 0.2);
+    animation: musicPulse 2s infinite ease-in-out;
+}
+
+/* Тонкая анимация пульсации под музыку */
+@keyframes musicPulse {
+    0% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); }
+    50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 210, 255, 0.6); }
+    100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); }
+}
+
+/* Иконка паузы (опционально, можно заменить символ через JS, 
+   но оставим текущий символ ♪, просто добавим ему вращение) */
+.music-control.playing::after {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    animation: rotateRing 4s linear infinite;
+}
+
+@keyframes rotateRing {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 
     @media (max-width: 1200px) {
 

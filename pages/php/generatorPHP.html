@@ -6,22 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skyrim Character Creation</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English+SC&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style/generator.css">
 
 </head>
 
 <body>
-    <div class="page-transition-overlay"></div>
+<div class="page-transition-overlay"></div>
 
 
 
 
-    <audio id="bg-music" loop>
-        <source src="../secunda.mp3" type="audio/mpeg">
-    </audio>
-    <button id="music-toggle" class="music-control">♪</button>
+<audio id="bg-music" loop>
+    <source src="../secunda.mp3" type="audio/mpeg">
+</audio>
+<button id="music-toggle" class="music-control">♪</button>
 
 
 
@@ -43,8 +42,7 @@
             <div class="form-container">
 
                 <!-- REGISTER -->
-                <form enctype="multipart/form-data" id="registerForm"
-                    class="form-box">
+                <form method="POST" action="/pages/php/akk.php" enctype="multipart/form-data" id="registerForm" class="form-box" >
 
 
                     <h2>Character Creation</h2>
@@ -82,7 +80,7 @@
 
                     <label>City of Origin</label>
                     <select name="city">
-
+                    
                         <option>Whiterun</option>
                         <option>Solitude</option>
                         <option>Windhelm</option>
@@ -92,15 +90,15 @@
                         <option>Morthal</option>
                         <option>Dawnstar</option>
                         <option>Winterhold</option>
-
+                    
                     </select>
 
                     <label>Guilds</label>
-
+                    
                     <label>Guilds (optional)</label>
-
+                    
                     <div class="guild-group">
-
+                    
                         <select name="guilds[]" class="guild-select">
                             <option value="">None</option>
                             <option>Companions</option>
@@ -115,7 +113,7 @@
                             <option>Imperial Legion</option>
                             <option>Stormcloaks</option>
                         </select>
-
+                    
                         <select name="guilds[]" class="guild-select">
                             <option value="">None</option>
                             <option>Companions</option>
@@ -130,7 +128,7 @@
                             <option>Imperial Legion</option>
                             <option>Stormcloaks</option>
                         </select>
-
+                    
                         <select name="guilds[]" class="guild-select">
                             <option value="">None</option>
                             <option>Companions</option>
@@ -145,7 +143,7 @@
                             <option>Imperial Legion</option>
                             <option>Stormcloaks</option>
                         </select>
-
+                    
                         <select name="guilds[]" class="guild-select">
                             <option value="">None</option>
                             <option>Companions</option>
@@ -160,12 +158,12 @@
                             <option>Imperial Legion</option>
                             <option>Stormcloaks</option>
                         </select>
-
+                    
                     </div>
-
+           
 
                     <label>Weapon Class</label>
-                    <select id="weaponClass" name="weapon_class" onchange="showWeaponOptions()">
+                    <select id="weaponClass"name="weapon_class" onchange="showWeaponOptions()">
                         <option value="">Select</option>
                         <option value="one">One-Handed</option>
                         <option value="two">Two-Handed</option>
@@ -174,13 +172,13 @@
                     </select>
 
                     <div id="oneOptions" class="hidden sub-options">
-
+                    
                         <select name="weapon_type">
                             <option>Mace</option>
                             <option>Sword</option>
                             <option>Axe</option>
                         </select>
-
+                    
                         <select name="weapon_material">
                             <option>Ancient Nord</option>
                             <option>Iron</option>
@@ -198,11 +196,11 @@
                             <option>Daedric</option>
                             <option>Dragonbone</option>
                         </select>
-
+                    
                     </div>
 
                     <div id="twoOptions" class="hidden sub-options">
-
+                    
                         <select name="weapon_type">
                             <option>Greatsword</option>
                             <option>Battleaxe</option>
@@ -225,11 +223,11 @@
                             <option>Daedric</option>
                             <option>Dragonbone</option>
                         </select>
-
+                    
                     </div>
 
                     <div id="archeryOptions" class="hidden sub-options">
-
+                    
                         <select name="weapon_material">
                             <option>Ancient Nord</option>
                             <option>Long Bow</option>
@@ -246,30 +244,30 @@
                             <option>Daedric Bow</option>
                             <option>Dragonbone Bow</option>
                         </select>
-
+                    
                     </div>
 
                     <div id="magicOptions" class="hidden sub-options">
-
+                    
                         <select name="weapon_type">
                             <option>Destruction</option>
                             <option>Alteration</option>
                             <option>Conjuration</option>
                         </select>
-
+                    
                         <div class="sub-options">
-
+                    
                             <select name="spell_element">
                                 <option>Fire</option>
                                 <option>Frost</option>
                                 <option>Shock</option>
                             </select>
-
+                    
                         </div>
-
+                    
                     </div>
 
-
+                    
 
                     <label>Standing Stone *</label>
                     <select name="standing_stone" required>
@@ -287,11 +285,13 @@
                         <option>The Tower Stone</option>
                         <option>The Warrior Stone</option>
                     </select>
-                    <p id="stone-description"
-                        style="font-size: 14px; color: #aaa; margin-top: 10px; font-style: italic; min-height: 40px;">
-                        Choose a standing stone to see its effect...
-                    </p>
+<p id="stone-description" style="font-size: 14px; color: #aaa; margin-top: 10px; font-style: italic; min-height: 40px;">
+    Choose a standing stone to see its effect...
+</p>
+                    <label>Avatar</label>
+                    <input type="file" name="avatar">
                     
+                   
                     <label>Backstory (optional)</label>
                     <textarea name="backstory" id="backstory"></textarea>
 
@@ -302,8 +302,8 @@
                 </form>
 
                 <!-- LOGIN -->
-                <form  id="loginForm" class="form-box hidden-form">
-
+                <form method="POST" action="php/akk.php" id="loginForm" class="form-box hidden-form">
+              
                     <h2>Enter Skyrim</h2>
 
                     <label>Email <span class="required">*</span></label>
@@ -323,122 +323,47 @@
 
     </div>
 
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-            const firebaseConfig = {
-                apiKey: "AIzaSyAabqJzaUr_2ao8GnNfXX2RXykRKTtnkBQ",
-                authDomain: "encyclopedia-of-skyrim.firebaseapp.com",
-                projectId: "encyclopedia-of-skyrim",
-                storageBucket: "encyclopedia-of-skyrim.firebasestorage.app",
-                messagingSenderId: "547591246417",
-                appId: "1:547591246417:web:0c99692d2f5f5ddd73de70",
-                measurementId: "G-QFPWBVMBRV"
-            };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        // Логика регистрации
-        const registerForm = document.getElementById('registerForm');
-            registerForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const formData = new FormData(registerForm);
-                const email = formData.get('email');
-                const password = formData.get('password');
-
-                try {
-                    // Создаем аккаунт
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    const user = userCredential.user;
-                    // Сохраняем данные персонажа в Firestore
-                    await setDoc(doc(db, "characters", user.uid), {
-                        name: formData.get('character_name'),
-                        race: formData.get('race'),
-                        gender: formData.get('gender'),
-                        city: formData.get('city'),
-                        stone: formData.get('standing_stone'),
-                        backstory: formData.get('backstory'),
-                        weapon_class: formData.get('weapon_class'),
-                        weapon_type: formData.get('weapon_type') || "",
-                        weapon_material: formData.get('weapon_material') || "",
-                        guilds: Array.from(formData.getAll('guilds[]')).filter(g => g !== ""),
-                        avatar: "../../pic/ava.png" // По умолчанию
-                    });
-
-                window.location.href = "profile.html";
-            } catch (error) {
-                alert("A Mistake in the Forging of Destiny: " + error.message);
-            }
-        });
-        // --- ЛОГИКА ВХОДА ---
-            const loginForm = document.getElementById('loginForm');
-            loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const email = loginForm.querySelector('input[name="email"]').value;
-                const password = loginForm.querySelector('input[name="password"]').value;
-
-                try {
-                    await signInWithEmailAndPassword(auth, email, password);
-                    window.location.href = "profile.html";
-                } catch (error) {
-                    alert("Incorrect email or password!");
-                }
-            });
-
-    </script>
 
     <script> //  отключение уже выбранных гильдий в других селектах
         document.querySelectorAll(".guild-select").forEach(select => {
-            select.addEventListener("change", updateGuildOptions);
-        });
-
-        function updateGuildOptions() {
-
-            const selects = document.querySelectorAll(".guild-select");
-            let selectedValues = [];
-
-            // собираем выбранные значения
-            selects.forEach(sel => {
-                if (sel.value !== "") {
-                    selectedValues.push(sel.value);
-                }
+                select.addEventListener("change", updateGuildOptions);
             });
 
-            // обновляем каждый select
-            selects.forEach(sel => {
-                let currentValue = sel.value;
+            function updateGuildOptions() {
 
-                Array.from(sel.options).forEach(option => {
+                const selects = document.querySelectorAll(".guild-select");
+                let selectedValues = [];
 
-                    if (option.value === "") return;
-
-                    if (selectedValues.includes(option.value) && option.value !== currentValue) {
-                        option.disabled = true;
-                    } else {
-                        option.disabled = false;
+                // собираем выбранные значения
+                selects.forEach(sel => {
+                    if (sel.value !== "") {
+                        selectedValues.push(sel.value);
                     }
+                });
+
+                // обновляем каждый select
+                selects.forEach(sel => {
+                    let currentValue = sel.value;
+
+                    Array.from(sel.options).forEach(option => {
+
+                        if (option.value === "") return;
+
+                        if (selectedValues.includes(option.value) && option.value !== currentValue) {
+                            option.disabled = true;
+                        } else {
+                            option.disabled = false;
+                        }
+
+                    });
 
                 });
 
-            });
-
-        }
+            }
     </script>
 
     <script>
-
+        
         let isLogin = false;
 
         function toggleForms() {
@@ -486,121 +411,120 @@
     </script>
 
 
-    <script>
-        const stoneDescriptions = {
-            "The Apprentice Stone": "+100% Magicka regeneration, but grants 100% Weakness to Magic. High risk, high reward for casters.",
-            "The Atronach Stone": "Grants +50 Magicka and 50% Spell Absorption, but slows Magicka regeneration by 50%.",
-            "The Lady Stone": "Regenerate both Health and Stamina 25% faster.",
-            "The Lord Stone": "Provides +50 Armor Rating and 25% Magic Resistance. Excellent for defensive builds.",
-            "The Lover Stone": "All skills increase 15% faster.",
-            "The Mage Stone": "Magic skills increase 20% faster.",
-            "The Ritual Stone": "Allows you to reanimate all nearby corpses to fight for you once per day.",
-            "The Serpent Stone": "Ranged attack that paralyzes a target for 5 seconds and deals 25 poison damage once per day.",
-            "The Steed Stone": "Increases Carry Weight by 100 and makes equipped armor weightless with no movement penalty.",
-            "The Shadow Stone": "Grants Invisibility for 60 seconds once per day.",
-            "The Thief Stone": "Stealth skills increase 20% faster.",
-            "The Tower Stone": "Automatically unlocks any Expert level lock (or lower) once per day.",
-            "The Warrior Stone": "Combat skills increase 20% faster."
-        };
+<script>
+    const stoneDescriptions = {
+        "The Apprentice Stone": "+100% Magicka regeneration, but grants 100% Weakness to Magic. High risk, high reward for casters.",
+        "The Atronach Stone": "Grants +50 Magicka and 50% Spell Absorption, but slows Magicka regeneration by 50%.",
+        "The Lady Stone": "Regenerate both Health and Stamina 25% faster.",
+        "The Lord Stone": "Provides +50 Armor Rating and 25% Magic Resistance. Excellent for defensive builds.",
+        "The Lover Stone": "All skills increase 15% faster.",
+        "The Mage Stone": "Magic skills increase 20% faster.",
+        "The Ritual Stone": "Allows you to reanimate all nearby corpses to fight for you once per day.",
+        "The Serpent Stone": "Ranged attack that paralyzes a target for 5 seconds and deals 25 poison damage once per day.",
+        "The Steed Stone": "Increases Carry Weight by 100 and makes equipped armor weightless with no movement penalty.",
+        "The Shadow Stone": "Grants Invisibility for 60 seconds once per day.",
+        "The Thief Stone": "Stealth skills increase 20% faster.",
+        "The Tower Stone": "Automatically unlocks any Expert level lock (or lower) once per day.",
+        "The Warrior Stone": "Combat skills increase 20% faster."
+    };
 
-        const stoneSelect = document.querySelector('select[name="standing_stone"]');
-        const descriptionDisplay = document.getElementById('stone-description');
+    const stoneSelect = document.querySelector('select[name="standing_stone"]');
+    const descriptionDisplay = document.getElementById('stone-description');
 
-        stoneSelect.addEventListener('change', function () {
-            const selectedStone = this.value;
-            descriptionDisplay.textContent = stoneDescriptions[selectedStone] || "Choose a standing stone to see its effect...";
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const overlay = document.querySelector('.page-transition-overlay');
+    stoneSelect.addEventListener('change', function () {
+        const selectedStone = this.value;
+        descriptionDisplay.textContent = stoneDescriptions[selectedStone] || "Choose a standing stone to see its effect...";
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const overlay = document.querySelector('.page-transition-overlay');
 
-            if (overlay) {
-                setTimeout(() => {
-                    overlay.classList.add('fade-out');
-                }, 100);
-            }
+        if (overlay) {
+            setTimeout(() => {
+                overlay.classList.add('fade-out');
+            }, 100);
+        }
 
-            const links = document.querySelectorAll('a');
+        const links = document.querySelectorAll('a');
 
-            links.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    const href = link.getAttribute('href');
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
 
-                    if (href && !href.startsWith('#') && !link.target && href !== 'javascript:void(0);') {
-                        e.preventDefault();
+                if (href && !href.startsWith('#') && !link.target && href !== 'javascript:void(0);') {
+                    e.preventDefault(); 
 
-                        overlay.classList.remove('fade-out');
-                        overlay.classList.add('fade-in');
+                    overlay.classList.remove('fade-out');
+                    overlay.classList.add('fade-in');
 
-                        setTimeout(() => {
-                            window.location.href = href;
-                        }, 600);
-                    }
-                });
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 600);
+                }
             });
         });
-    </script>
-    <script>
-        const audio = document.getElementById('bg-music');
-        const musicBtn = document.getElementById('music-toggle');
+    });
+</script>
+<script>
+    const audio = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-toggle');
 
-        const syncMusic = () => {
-            const isPlaying = localStorage.getItem('musicPlaying') === 'true';
-            const savedTime = localStorage.getItem('musicTime');
+    const syncMusic = () => {
+        const isPlaying = localStorage.getItem('musicPlaying') === 'true';
+        const savedTime = localStorage.getItem('musicTime');
 
-            if (savedTime) {
-                audio.currentTime = parseFloat(savedTime);
+        if (savedTime) {
+            audio.currentTime = parseFloat(savedTime);
+        }
+
+        if (isPlaying) {
+            // Пытаемся включить
+            const playPromise = audio.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    musicBtn.classList.add('playing');
+                }).catch(() => {
+                    console.log("Автоплей заблокирован. Ждем клика.");
+                    // Если заблокировано, включаем при первом клике по документу
+                    document.addEventListener('click', () => {
+                        if (localStorage.getItem('musicPlaying') === 'true' && audio.paused) {
+                            audio.play();
+                            musicBtn.classList.add('playing');
+                        }
+                    }, { once: true });
+                });
             }
+        }
+    };
 
-            if (isPlaying) {
-                // Пытаемся включить
-                const playPromise = audio.play();
-
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        musicBtn.classList.add('playing');
-                    }).catch(() => {
-                        console.log("Автоплей заблокирован. Ждем клика.");
-                        // Если заблокировано, включаем при первом клике по документу
-                        document.addEventListener('click', () => {
-                            if (localStorage.getItem('musicPlaying') === 'true' && audio.paused) {
-                                audio.play();
-                                musicBtn.classList.add('playing');
-                            }
-                        }, { once: true });
-                    });
-                }
-            }
-        };
-
-        // Сохраняем прогресс
-        setInterval(() => {
-            if (!audio.paused) {
-                localStorage.setItem('musicTime', audio.currentTime);
-            }
-        }, 1000);
-
-        // Логика кнопки
-        musicBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Чтобы не срабатывал listener на document
-            if (audio.paused) {
-                audio.play();
-                musicBtn.classList.add('playing');
-                localStorage.setItem('musicPlaying', 'true');
-            } else {
-                audio.pause();
-                musicBtn.classList.remove('playing');
-                localStorage.setItem('musicPlaying', 'false');
-            }
-        });
-
-        window.addEventListener('load', syncMusic);
-
-        window.addEventListener('beforeunload', () => {
+    // Сохраняем прогресс
+    setInterval(() => {
+        if (!audio.paused) {
             localStorage.setItem('musicTime', audio.currentTime);
-        });
-    </script>
-</body>
+        }
+    }, 1000);
 
+    // Логика кнопки
+    musicBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Чтобы не срабатывал listener на document
+        if (audio.paused) {
+            audio.play();
+            musicBtn.classList.add('playing');
+            localStorage.setItem('musicPlaying', 'true');
+        } else {
+            audio.pause();
+            musicBtn.classList.remove('playing');
+            localStorage.setItem('musicPlaying', 'false');
+        }
+    });
+
+    window.addEventListener('load', syncMusic);
+
+    window.addEventListener('beforeunload', () => {
+        localStorage.setItem('musicTime', audio.currentTime);
+    });
+</script>
+</body>
 </html>

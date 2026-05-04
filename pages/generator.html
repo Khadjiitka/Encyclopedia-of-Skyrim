@@ -15,16 +15,10 @@
 <body>
     <div class="page-transition-overlay"></div>
 
-
-
-
     <audio id="bg-music" loop>
         <source src="../secunda.mp3" type="audio/mpeg">
     </audio>
     <button id="music-toggle" class="music-control">♪</button>
-
-
-
 
 
     <div class="container">
@@ -95,10 +89,7 @@
 
                     </select>
 
-                    <label>Guilds</label>
-
                     <label>Guilds (optional)</label>
-
                     <div class="guild-group">
 
                         <select name="guilds[]" class="guild-select">
@@ -373,7 +364,7 @@
                         weapon_type: formData.get('weapon_type') || "",
                         weapon_material: formData.get('weapon_material') || "",
                         guilds: Array.from(formData.getAll('guilds[]')).filter(g => g !== ""),
-                        avatar: "../../pic/ava.png" // По умолчанию
+                        avatar: "../pic/ava.PNG" // По умолчанию
                     });
 
                 window.location.href = "profile.html";

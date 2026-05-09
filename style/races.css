@@ -257,42 +257,6 @@ h1 {
 
 }
 
-@media (max-width: 850px) {
-    h1 {
-        font-size: 32px;
-    }
-
-    .guild-list {
-        gap: 60px;
-    }
-
-    .guild-item {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-        opacity: 0;
-    }
-
-    .side-description {
-        opacity: 1 !important;
-        transform: translateX(0) !important;
-        font-size: 16px;
-        padding: 0 15px;
-        color: #e5e5e5;
-    }
-
-    .image-wrapper {
-        width: 280px;
-        height: 280px;
-    }
-
-    .overlay-title {
-        opacity: 1 !important;
-        background: rgba(0, 0, 0, 0.4);
-        font-size: 24px;
-    }
-}
-
 @media (max-width: 480px) {
     .image-wrapper {
         width: 220px;
@@ -303,4 +267,64 @@ h1 {
         font-size: 15px;
         line-height: 1.5;
     }
+}
+@media (max-width: 1200px) {
+    .content {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 850px) {
+    body {
+        background-attachment: scroll;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .guild-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .image-wrapper {
+        width: 220px;
+        height: 220px;
+    }
+
+    .side-description {
+        opacity: 1 !important;
+        transform: none !important;
+        font-size: 15px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .overlay-title {
+        opacity: 1;
+        background: rgba(0, 0, 0, 0.5);
+        font-size: 20px;
+        height: 40px;
+        top: auto;
+    }
+
+    .music-control {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .background-fog {
+        backdrop-filter: none;
+    }
+}
+
+.back-btn {
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    z-index: 1000;
 }

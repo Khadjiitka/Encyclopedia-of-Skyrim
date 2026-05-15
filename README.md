@@ -4,9 +4,6 @@ The project is developed as part of my Web Design course in University, where I 
 
 The main goal of this project is to create a visually rich, atmospheric website dedicated to the world of Skyrim, including its guilds, magic, races, factions, creatures, weapons, and history. <br>
 
-<i> ⚠️ The project is currently in progress. 
-Many pages are still being redesigned, optimized, or recreated based on my new Figma layouts.</i>
-
 ##  Project Description
 
 The site is designed as a multi-page encyclopedia with:
